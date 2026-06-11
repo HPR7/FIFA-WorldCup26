@@ -136,7 +136,8 @@ const i18n = {
     "col-gd": "GD",
     "skip-intro": "Skip Intro",
     "audio-mute": "Mute",
-    "audio-unmute": "Unmute"
+    "audio-unmute": "Unmute",
+    "search-results": "Search Results"
   },
   es: {
     "brand-tagline": "COPA MUNDIAL DE LA FIFA",
@@ -282,7 +283,8 @@ const i18n = {
     "col-gd": "DG",
     "skip-intro": "Saltar Intro",
     "audio-mute": "Silenciar",
-    "audio-unmute": "Activar Audio"
+    "audio-unmute": "Activar Audio",
+    "search-results": "Resultados de búsqueda"
   }
 };
 
@@ -2768,12 +2770,13 @@ function renderFixturesGrid() {
   const searchQuery = teamSearchInput.value.toLowerCase().trim();
   const filterFavoritesOnly = filterFavoritesCheckbox.checked;
 
-  let filteredMatches = fixtures.filter(match => {
-    const matchDateStr = match.kickoff.split("T")[0];
-    return matchDateStr === selectedDate;
-  });
-
-  if (searchQuery) {
+  let filteredMatches = fixtures;
+  if (!searchQuery) {
+    filteredMatches = filteredMatches.filter(match => {
+      const matchDateStr = match.kickoff.split("T")[0];
+      return matchDateStr === selectedDate;
+    });
+  } else {
     filteredMatches = filteredMatches.filter(match => {
       const t1En = (teamsDb[match.team1]?.name || "").toLowerCase();
       const t2En = (teamsDb[match.team2]?.name || "").toLowerCase();
@@ -2798,7 +2801,12 @@ function renderFixturesGrid() {
     day: "numeric",
     year: "numeric"
   });
-  currentDateTitle.textContent = `${formattedDate}`;
+  
+  if (searchQuery) {
+    currentDateTitle.textContent = `${translate("search-results")}: "${teamSearchInput.value}"`;
+  } else {
+    currentDateTitle.textContent = `${formattedDate}`;
+  }
   
   const matchesLabel = filteredMatches.length === 1 ? translate("match-singular") : translate("match-plural");
   matchCountBadge.textContent = `${filteredMatches.length} ${matchesLabel}`;
@@ -2868,13 +2876,17 @@ function renderFixturesGrid() {
       </span>
     ` : "";
 
+    const dateText = searchQuery 
+      ? new Date(match.kickoff).toLocaleDateString(locale, { month: "short", day: "numeric" }) + " • " 
+      : "";
+
     return `
       <article class="match-card ${isFavMatch ? 'favorite-highlight' : ''}" 
                tabindex="0" 
                data-match-id="${match.id}">
         <div class="match-card-meta">
           <span class="match-stage-badge">${starIcon}${translate(match.stage)}</span>
-          <span class="match-stadium-text" title="${match.stadium}">${match.stadium}</span>
+          <span class="match-stadium-text" title="${match.stadium}">${dateText}${match.stadium}</span>
         </div>
         <div class="match-card-scoreline">
           <div class="match-team team1">
