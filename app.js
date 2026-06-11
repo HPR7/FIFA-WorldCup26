@@ -31,6 +31,7 @@ const i18n = {
     "btn-save-onboarding": "Enter Fixture Hub",
     "btn-close-match-dialog": "Close match details",
     "footer-text": "© 2026 FIFA World Cup™ Fixture Dashboard. Built with premium web technologies. In accordance with the 2026 tournament branding.",
+    "footer-powered-by": "Powered with AI by ASSEGURA AI",
     // Stages
     "Group A": "Group A", "Group B": "Group B", "Group C": "Group C", "Group D": "Group D",
     "Group E": "Group E", "Group F": "Group F", "Group G": "Group G", "Group H": "Group H",
@@ -157,6 +158,7 @@ const i18n = {
     "btn-save-onboarding": "Entrar al Centro de Partidos",
     "btn-close-match-dialog": "Cerrar detalles del partido",
     "footer-text": "© 2026 Tablero de Partidos de la Copa Mundial de la FIFA™. Desarrollado con tecnologías web premium. Conforme a la identidad del torneo.",
+    "footer-powered-by": "Desarrollado con IA por ASSEGURA AI",
     // Stages
     "Group A": "Grupo A", "Group B": "Grupo B", "Group C": "Grupo C", "Group D": "Grupo D",
     "Group E": "Grupo E", "Group F": "Grupo F", "Group G": "Grupo G", "Group H": "Grupo H",
