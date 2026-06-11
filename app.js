@@ -10,7 +10,7 @@ let currentLanguage = localStorage.getItem("wc26_language") || "en";
 const i18n = {
   en: {
     "brand-tagline": "FIFA WORLD CUP",
-    "brand-title": "26™ fixture hub",
+    "brand-title": "2026 fixture hub",
     "my-teams": "My Teams:",
     "none-followed": "None followed",
     "update-results": "Update Results",
@@ -141,7 +141,7 @@ const i18n = {
   },
   es: {
     "brand-tagline": "COPA MUNDIAL DE LA FIFA",
-    "brand-title": "Centro de Partidos 26™",
+    "brand-title": "Centro de Partidos 2026",
     "my-teams": "Mis Equipos:",
     "none-followed": "Ninguno seleccionado",
     "update-results": "Actualizar Resultados",
