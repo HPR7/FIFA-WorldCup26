@@ -133,7 +133,8 @@ const i18n = {
     "col-w": "W",
     "col-d": "D",
     "col-l": "L",
-    "col-gd": "GD"
+    "col-gd": "GD",
+    "skip-intro": "Skip Intro"
   },
   es: {
     "brand-tagline": "COPA MUNDIAL DE LA FIFA",
@@ -276,7 +277,8 @@ const i18n = {
     "col-w": "PG",
     "col-d": "PE",
     "col-l": "PP",
-    "col-gd": "DG"
+    "col-gd": "DG",
+    "skip-intro": "Saltar Intro"
   }
 };
 
@@ -2137,16 +2139,62 @@ const matchCenterContent = document.getElementById("match-center-content");
 const toastContainer = document.getElementById("toast-container");
 
 // --- Initialization ---
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Language State
-  const savedLang = localStorage.getItem("wc26_language") || "en";
-  currentLanguage = savedLang;
-  const langToggleCheckbox = document.getElementById("lang-toggle-checkbox");
-  if (langToggleCheckbox) {
-    langToggleCheckbox.checked = (savedLang === "es");
-  }
-  applyLanguage(savedLang);
+function startIntro() {
+  const overlay = document.getElementById("video-intro-overlay");
+  const video = document.getElementById("intro-video");
+  const skipBtn = document.getElementById("skip-intro-btn");
 
+  if (!overlay || !video) {
+    initializeApp();
+    return;
+  }
+
+  let introEnded = false;
+
+  const finishIntro = (immediate = false) => {
+    if (introEnded) return;
+    introEnded = true;
+
+    try {
+      video.pause();
+    } catch (e) {}
+
+    const transitionOut = () => {
+      overlay.classList.add("fade-out");
+      setTimeout(() => {
+        overlay.style.display = "none";
+        initializeApp();
+      }, 500);
+    };
+
+    if (immediate) {
+      transitionOut();
+    } else {
+      setTimeout(transitionOut, 2000);
+    }
+  };
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => {
+      finishIntro(true);
+    });
+  }
+
+  video.addEventListener("ended", () => {
+    finishIntro(false);
+  });
+
+  video.play().catch(err => {
+    console.warn("Video autoplay blocked or failed:", err);
+  });
+
+  video.addEventListener("error", () => {
+    console.error("Error loading intro video.");
+    finishIntro(true);
+  });
+}
+
+function initializeApp() {
   // 1. Populate Timezone Selectors
   populateTimezoneDropdowns();
 
@@ -2160,6 +2208,20 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     renderApp();
   }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Language State
+  const savedLang = localStorage.getItem("wc26_language") || "en";
+  currentLanguage = savedLang;
+  const langToggleCheckbox = document.getElementById("lang-toggle-checkbox");
+  if (langToggleCheckbox) {
+    langToggleCheckbox.checked = (savedLang === "es");
+  }
+  applyLanguage(savedLang);
+
+  // Start the video intro
+  startIntro();
 });
 
 // --- Timezone Management ---
