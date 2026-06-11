@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA World Cup 2026™ | Fixtures & Tournament Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- App Background Overlay -->
+  <div class="stadium-bg-overlay" aria-hidden="true"></div>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Header Section -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <svg class="cup-logo" viewBox="0 0 100 100" width="50" height="50" aria-label="FIFA World Cup 2026 logo">
+          <!-- Geometric abstract shapes representation of 26 and the trophy -->
+          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2" />
+          <path d="M40 30 C 40 20, 60 20, 60 30 C 60 40, 40 50, 40 65 L 60 65 L 60 70 L 40 70 L 40 65 C 40 55, 60 45, 60 35 C 60 30, 40 30, 40 30 Z" fill="url(#gold-gradient)" />
+          <path d="M50 40 L54 55 L46 55 Z" fill="#ffffff" />
+          <path d="M48 55 L52 55 L52 70 L48 70 Z" fill="#ffd600" />
+          <defs>
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffd600" />
+              <stop offset="50%" stop-color="#ffab00" />
+              <stop offset="100%" stop-color="#ff6d00" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-tagline">FIFA WORLD CUP</span>
+          <h1 class="brand-title">26™ fixture hub</h1>
+        </div>
+      </div>
+
+      <!-- Favorites Quick Bar -->
+      <div class="followed-teams-bar" id="followed-teams-bar" aria-label="Followed teams selection">
+        <span class="bar-label">My Teams:</span>
+        <div class="followed-list" id="followed-list-placeholder">
+          <!-- Managed by JS -->
+          <span class="no-teams-text">None followed</span>
+        </div>
+        <button type="button" class="btn-manage-favorites" id="btn-edit-favorites" aria-label="Edit followed teams">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="header-controls">
+        <!-- Timezone Selector -->
+        <div class="control-group">
+          <label for="timezone-selector" class="sr-only">Timezone</label>
+          <select id="timezone-selector" class="select-dropdown" aria-label="Select timezone">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+
+        <!-- Refresh Results Button -->
+        <button type="button" class="btn-refresh" id="btn-refresh-data" aria-label="Update match results">
+          <svg class="refresh-icon" id="refresh-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <span class="btn-text">Update Results</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <!-- View Switcher Tabs -->
+    <nav class="view-tabs" aria-label="Dashboard Views">
+      <button type="button" class="tab-button active" id="tab-calendar" data-view="calendar" aria-selected="true" role="tab">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Match Calendar
+      </button>
+      <button type="button" class="tab-button" id="tab-bracket" data-view="bracket" aria-selected="false" role="tab">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        Knockout Bracket
+      </button>
+      <button type="button" class="tab-button" id="tab-standings" data-view="standings" aria-selected="false" role="tab">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M3 20v-8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"/><path d="M13 20v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"/></svg>
+        Group Standings
+      </button>
+    </nav>
+
+    <!-- Calendar View Container -->
+    <section id="calendar-view" class="view-section active-view" aria-labelledby="tab-calendar">
+      <!-- Calendar Dates Row -->
+      <div class="calendar-timeline-container">
+        <button type="button" class="btn-nav-timeline prev" id="btn-prev-date" aria-label="Previous date">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        
+        <div class="calendar-timeline" id="calendar-dates-row" role="listbox" aria-label="Select match date">
+          <!-- Populated by JS -->
+        </div>
+
+        <button type="button" class="btn-nav-timeline next" id="btn-next-date" aria-label="Next date">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Quick Filter Bar -->
+      <div class="filter-bar">
+        <search class="search-box">
+          <input type="text" id="team-search" placeholder="Search teams (e.g. Argentina, USA...)" aria-label="Search teams">
+        </search>
+        
+        <div class="filter-options">
+          <label class="checkbox-container">
+            <input type="checkbox" id="filter-favorites">
+            <span class="checkmark"></span>
+            Show only followed teams
+          </label>
+        </div>
+      </div>
+
+      <!-- Fixtures Grid/List -->
+      <div class="fixtures-container">
+        <div class="group-stage-header">
+          <h2 class="section-title" id="current-date-title">Matches</h2>
+          <span class="match-count-badge" id="match-count-badge">0 matches</span>
+        </div>
+        
+        <div class="fixtures-grid" id="fixtures-grid-list">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Knockout Bracket View Container -->
+    <section id="bracket-view" class="view-section" aria-labelledby="tab-bracket">
+      <div class="bracket-instructions">
+        <p>Interactive Bracket: Track the road to the Final. Click on active matches to view full match centers.</p>
+      </div>
+      <div class="bracket-outer">
+        <div class="bracket-wrapper" id="bracket-tree-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Group Standings View Container -->
+    <section id="standings-view" class="view-section" aria-labelledby="tab-standings">
+      <div class="standings-instructions">
+        <p>Current standings. Points are calculated dynamically based on match results from the live data feed.</p>
+      </div>
+      <div class="standings-grid" id="standings-grid-container">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Onboarding & Settings Modal Dialog (Modal Overlay) -->
+  <dialog id="onboarding-dialog" class="onboarding-dialog" closedby="closerequest" aria-labelledby="onboarding-title">
+    <div class="onboarding-content">
+      <div class="onboarding-header">
+        <svg class="cup-logo large" viewBox="0 0 100 100" width="80" height="80">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2" />
+          <path d="M40 30 C 40 20, 60 20, 60 30 C 60 40, 40 50, 40 65 L 60 65 L 60 70 L 40 70 L 40 65 C 40 55, 60 45, 60 35 C 60 30, 40 30, 40 30 Z" fill="url(#gold-gradient-large)" />
+          <path d="M50 40 L54 55 L46 55 Z" fill="#ffffff" />
+          <path d="M48 55 L52 55 L52 70 L48 70 Z" fill="#ffd600" />
+          <defs>
+            <linearGradient id="gold-gradient-large" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffd600" />
+              <stop offset="50%" stop-color="#ffab00" />
+              <stop offset="100%" stop-color="#ff6d00" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <h2 id="onboarding-title" class="onboarding-title-text">Welcome to FIFA 26™ Hub</h2>
+        <p class="onboarding-subtitle">Personalize your tournament dashboard before we kick off!</p>
+      </div>
+
+      <form id="onboarding-form" method="dialog" class="onboarding-form">
+        <!-- Step 1: Timezone -->
+        <fieldset class="onboarding-step">
+          <legend class="step-legend">1. Select Your Timezone</legend>
+          <div class="form-group">
+            <select id="onboarding-timezone" class="select-dropdown full-width" aria-label="Choose timezone">
+              <!-- Populated by JS -->
+            </select>
+            <p class="field-hint">Match times will automatically convert to your selected local time.</p>
+          </div>
+        </fieldset>
+
+        <!-- Step 2: Favorites -->
+        <fieldset class="onboarding-step">
+          <legend class="step-legend">2. Follow Your Teams (Max 4)</legend>
+          <p class="field-hint text-center">Get highlights, quick notifications, and filter matches for your selected teams.</p>
+          
+          <div class="squad-selection-grid" id="onboarding-teams-grid">
+            <!-- Populated dynamically by JS -->
+          </div>
+          
+          <div class="selection-counter" id="selection-counter-text">
+            Selected: <span id="fav-count">0</span> / 4
+          </div>
+        </fieldset>
+
+        <div class="onboarding-footer">
+          <button type="submit" class="btn-submit-onboarding" id="btn-save-onboarding">Enter Fixture Hub</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Match Details Modal Dialog -->
+  <dialog id="match-details-dialog" class="match-details-dialog" closedby="any" aria-labelledby="dialog-match-title">
+    <!-- Light-dismiss wrapper and dialog content -->
+    <div class="match-center-wrapper">
+      <button type="button" class="btn-close-dialog" id="btn-close-match-dialog" aria-label="Close match details">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div id="match-center-content">
+        <!-- Populated Dynamically by JS -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="app-footer-page">
+    <p>© 2026 FIFA World Cup™ Fixture Dashboard. Built with premium web technologies. In accordance with the 2026 tournament branding.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
