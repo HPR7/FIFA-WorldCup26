@@ -141,7 +141,8 @@ const i18n = {
     "btn-update-lineups": "Update Lineups",
     "toast-lineups-updated": "Starting lineups updated for this match!",
     "win-probability": "Match Win Probability",
-    "draw": "Draw"
+    "draw": "Draw",
+    "penalty-goal": "Penalty"
   },
   es: {
     "brand-tagline": "COPA MUNDIAL DE LA FIFA",
@@ -292,7 +293,8 @@ const i18n = {
     "btn-update-lineups": "Actualizar Titulares",
     "toast-lineups-updated": "¡Alineaciones titulares actualizadas para este partido!",
     "win-probability": "Estimación de Victoria",
-    "draw": "Empate"
+    "draw": "Empate",
+    "penalty-goal": "Penal"
   }
 };
 
@@ -3206,6 +3208,39 @@ function renderFixturesGrid() {
       ? new Date(match.kickoff).toLocaleDateString(locale, { month: "short", day: "numeric" }) + " • " 
       : "";
 
+    let goalsHTML = "";
+    if (match.events && match.events.length > 0) {
+      const goalEvents = match.events.filter(e => e.type === "goal" || e.type === "penalty");
+      if (goalEvents.length > 0) {
+        goalsHTML = `
+          <div class="match-card-goals" style="
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            width: 100%;
+          ">
+            ${goalEvents.map(event => {
+              const isPenalty = event.detail === "penalty" || event.penalty === true || event.type === "penalty";
+              const penaltyIndicator = isPenalty ? ` <span class="penalty-indicator" title="${translate("penalty-goal")}" style="color: var(--primary-gold); font-weight: bold;">(P)</span>` : "";
+              const isTeam1 = event.team === match.team1;
+              const align = isTeam1 ? "left" : "right";
+              return `
+                <div class="match-card-goal-row" style="display: flex; justify-content: ${isTeam1 ? 'flex-start' : 'flex-end'}; align-items: center; gap: 0.25rem; width: 100%;">
+                  ${isTeam1 ? `⚽ <span><strong>${event.player}</strong> ${event.minute}'${penaltyIndicator}</span>` : `<span><strong>${event.player}</strong> ${event.minute}'${penaltyIndicator}</span> ⚽`}
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+    }
+
     return `
       <article class="match-card ${isFavMatch ? 'favorite-highlight' : ''}" 
                tabindex="0" 
@@ -3231,6 +3266,7 @@ function renderFixturesGrid() {
             <span class="match-team-name">${t2Name}</span>
           </div>
         </div>
+        ${goalsHTML}
         <div class="match-card-status">
           ${statusBadgeHTML}
         </div>
@@ -3376,6 +3412,10 @@ function calculateMatchPredictions(team1Code, team2Code) {
 // --- Match Lineups Randomizer (Swaps 1-2 field players and GKs prior to kickoff) ---
 function randomizeMatchLineups(matchId, t1, t2) {
   if (!matchLineups[matchId]) return;
+  
+  // Keep lineups locked once match starts or finishes!
+  const match = fixtures.find(m => m.id === matchId);
+  if (!match || match.status !== "SCHEDULED") return;
 
   const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
 
@@ -3500,6 +3540,8 @@ function renderMatchCenterContent(match, t1, t2) {
       <div class="mc-events-timeline" role="log" aria-label="Match events">
         ${match.events.map(event => {
           const isTeam1 = event.team === match.team1;
+          const isPenalty = event.detail === "penalty" || event.penalty === true || event.type === "penalty";
+          const penaltyText = isPenalty ? ` <span class="penalty-indicator" title="${translate("penalty-goal")}" style="color: var(--primary-gold); font-weight: bold;">(P)</span>` : "";
           const eventIcon = event.type === "goal" 
             ? `<span class="event-icon-goal" aria-label="Goal">⚽</span>` 
             : `<span class="event-icon-yellow" aria-label="Yellow Card" title="Yellow Card"></span>`;
@@ -3507,11 +3549,11 @@ function renderMatchCenterContent(match, t1, t2) {
           return `
             <div class="mc-event-row">
               <div class="mc-event-detail team1-event">
-                ${isTeam1 ? `<span>${event.player}</span> ${eventIcon}` : ""}
+                ${isTeam1 ? `<span>${event.player}${penaltyText}</span> ${eventIcon}` : ""}
               </div>
               <span class="mc-event-minute">${event.minute}'</span>
               <div class="mc-event-detail team2-event">
-                ${!isTeam1 ? `${eventIcon} <span>${event.player}</span>` : ""}
+                ${!isTeam1 ? `${eventIcon} <span>${event.player}${penaltyText}</span>` : ""}
               </div>
             </div>
           `;

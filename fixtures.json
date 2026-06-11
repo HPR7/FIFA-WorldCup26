@@ -4,26 +4,33 @@
     "stage": "Group A",
     "team1": "MEX",
     "team2": "RSA",
-    "score1": null,
-    "score2": null,
-    "status": "SCHEDULED",
+    "score1": 2,
+    "score2": 1,
+    "status": "FINISHED",
     "kickoff": "2026-06-11T19:00:00Z",
     "stadium": "Estadio Azteca, Mexico City",
     "liveMinute": null,
-    "events": []
+    "events": [
+      { "type": "goal", "team": "MEX", "player": "Santiago Giménez", "minute": 15 },
+      { "type": "goal", "team": "RSA", "player": "Percy Tau", "minute": 44, "detail": "penalty" },
+      { "type": "goal", "team": "MEX", "player": "Edson Álvarez", "minute": 88 }
+    ]
   },
   {
     "id": "m2",
     "stage": "Group A",
     "team1": "KOR",
     "team2": "CZE",
-    "score1": null,
-    "score2": null,
-    "status": "SCHEDULED",
+    "score1": 1,
+    "score2": 1,
+    "status": "LIVE",
     "kickoff": "2026-06-11T22:00:00Z",
     "stadium": "Estadio Guadalajara, Guadalajara",
-    "liveMinute": null,
-    "events": []
+    "liveMinute": 75,
+    "events": [
+      { "type": "goal", "team": "KOR", "player": "Son Heung-min", "minute": 32 },
+      { "type": "goal", "team": "CZE", "player": "Tomáš Souček", "minute": 55, "penalty": true }
+    ]
   },
   {
     "id": "m3",
