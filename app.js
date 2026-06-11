@@ -589,12 +589,383 @@ const baseTeams = {
 };
 
 // --- Build Complete Teams Database with Dynamic Squads ---
+const customSquads = {
+  "USA": {
+    starters: [
+      { num: 1, name: "Matt Turner", pos: "GK" },
+      { num: 2, name: "Sergiño Dest", pos: "DF" },
+      { num: 3, name: "Antonee Robinson", pos: "DF" },
+      { num: 4, name: "Tyler Adams", pos: "MF" },
+      { num: 13, name: "Tim Ream", pos: "DF" },
+      { num: 6, name: "Yunis Musah", pos: "MF" },
+      { num: 8, name: "Weston McKennie", pos: "MF" },
+      { num: 10, name: "Christian Pulisic*", pos: "FW" },
+      { num: 7, name: "Giovanni Reyna", pos: "MF" },
+      { num: 21, name: "Timothy Weah", pos: "FW" },
+      { num: 9, name: "Folarin Balogun", pos: "FW" }
+    ],
+    subs: [
+      { num: 18, name: "Ethan Horvath", pos: "GK" },
+      { num: 12, name: "Miles Robinson", pos: "DF" },
+      { num: 15, name: "Johnny Cardoso", pos: "MF" },
+      { num: 11, name: "Brenden Aaronson", pos: "MF" },
+      { num: 19, name: "Haji Wright", pos: "FW" },
+      { num: 22, name: "Ricardo Pepi", pos: "FW" }
+    ]
+  },
+  "ARG": {
+    starters: [
+      { num: 23, name: "Emiliano Martínez", pos: "GK" },
+      { num: 26, name: "Nahuel Molina", pos: "DF" },
+      { num: 3, name: "Nicolás Tagliafico", pos: "DF" },
+      { num: 19, name: "Nicolás Otamendi", pos: "DF" },
+      { num: 13, name: "Cristian Romero", pos: "DF" },
+      { num: 7, name: "Rodrigo De Paul", pos: "MF" },
+      { num: 24, name: "Enzo Fernández", pos: "MF" },
+      { num: 10, name: "Lionel Messi*", pos: "FW" },
+      { num: 20, name: "Alexis Mac Allister", pos: "MF" },
+      { num: 22, name: "Lautaro Martínez", pos: "FW" },
+      { num: 9, name: "Julián Álvarez", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Franco Armani", pos: "GK" },
+      { num: 4, name: "Gonzalo Montiel", pos: "DF" },
+      { num: 6, name: "German Pezzella", pos: "DF" },
+      { num: 5, name: "Leandro Paredes", pos: "MF" },
+      { num: 11, name: "Ángel Di María", pos: "FW" },
+      { num: 15, name: "Nicolás González", pos: "FW" }
+    ]
+  },
+  "BRA": {
+    starters: [
+      { num: 1, name: "Alisson Becker", pos: "GK" },
+      { num: 2, name: "Danilo", pos: "DF" },
+      { num: 6, name: "Wendell", pos: "DF" },
+      { num: 3, name: "Éder Militão", pos: "DF" },
+      { num: 4, name: "Marquinhos", pos: "DF" },
+      { num: 5, name: "Bruno Guimarães", pos: "MF" },
+      { num: 15, name: "João Gomes", pos: "MF" },
+      { num: 7, name: "Vinícius Júnior*", pos: "FW" },
+      { num: 8, name: "Lucas Paquetá", pos: "MF" },
+      { num: 11, name: "Raphinha", pos: "FW" },
+      { num: 10, name: "Rodrygo Goes", pos: "FW" }
+    ],
+    subs: [
+      { num: 23, name: "Bento", pos: "GK" },
+      { num: 13, name: "Yan Couto", pos: "DF" },
+      { num: 17, name: "Beraldo", pos: "DF" },
+      { num: 18, name: "Douglas Luiz", pos: "MF" },
+      { num: 19, name: "Andreas Pereira", pos: "MF" },
+      { num: 21, name: "Endrick", pos: "FW" }
+    ]
+  },
+  "FRA": {
+    starters: [
+      { num: 16, name: "Mike Maignan", pos: "GK" },
+      { num: 5, name: "Jules Koundé", pos: "DF" },
+      { num: 22, name: "Théo Hernandez", pos: "DF" },
+      { num: 4, name: "Dayot Upamecano", pos: "DF" },
+      { num: 17, name: "William Saliba", pos: "DF" },
+      { num: 8, name: "Aurélien Tchouaméni", pos: "MF" },
+      { num: 13, name: "N'Golo Kanté", pos: "MF" },
+      { num: 10, name: "Kylian Mbappé*", pos: "FW" },
+      { num: 7, name: "Antoine Griezmann", pos: "MF" },
+      { num: 11, name: "Ousmane Dembélé", pos: "FW" },
+      { num: 15, name: "Marcus Thuram", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Brice Samba", pos: "GK" },
+      { num: 3, name: "Ferland Mendy", pos: "DF" },
+      { num: 2, name: "Benjamin Pavard", pos: "DF" },
+      { num: 6, name: "Eduardo Camavinga", pos: "MF" },
+      { num: 19, name: "Youssouf Fofana", pos: "MF" },
+      { num: 9, name: "Olivier Giroud", pos: "FW" }
+    ]
+  },
+  "ENG": {
+    starters: [
+      { num: 1, name: "Jordan Pickford", pos: "GK" },
+      { num: 2, name: "Kyle Walker", pos: "DF" },
+      { num: 3, name: "Luke Shaw", pos: "DF" },
+      { num: 5, name: "John Stones", pos: "DF" },
+      { num: 6, name: "Marc Guéhi", pos: "DF" },
+      { num: 4, name: "Declan Rice", pos: "MF" },
+      { num: 8, name: "Trent Alexander-Arnold", pos: "MF" },
+      { num: 10, name: "Jude Bellingham*", pos: "MF" },
+      { num: 7, name: "Bukayo Saka", pos: "FW" },
+      { num: 11, name: "Phil Foden", pos: "FW" },
+      { num: 9, name: "Harry Kane", pos: "FW" }
+    ],
+    subs: [
+      { num: 13, name: "Aaron Ramsdale", pos: "GK" },
+      { num: 12, name: "Kieran Trippier", pos: "DF" },
+      { num: 14, name: "Ezri Konsa", pos: "DF" },
+      { num: 16, name: "Conor Gallagher", pos: "MF" },
+      { num: 21, name: "Cole Palmer", pos: "MF" },
+      { num: 17, name: "Ivan Toney", pos: "FW" }
+    ]
+  },
+  "MEX": {
+    starters: [
+      { num: 13, name: "Guillermo Ochoa", pos: "GK" },
+      { num: 3, name: "César Montes", pos: "DF" },
+      { num: 5, name: "Johan Vásquez", pos: "DF" },
+      { num: 19, name: "Jorge Sánchez", pos: "DF" },
+      { num: 6, name: "Gerardo Arteaga", pos: "DF" },
+      { num: 4, name: "Edson Álvarez*", pos: "MF" },
+      { num: 24, name: "Luis Chávez", pos: "MF" },
+      { num: 7, name: "Luis Romo", pos: "MF" },
+      { num: 15, name: "Uriel Antuna", pos: "FW" },
+      { num: 11, name: "Santiago Giménez", pos: "FW" },
+      { num: 9, name: "Julián Quiñones", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Julio González", pos: "GK" },
+      { num: 2, name: "Bryan González", pos: "DF" },
+      { num: 14, name: "Érick Sánchez", pos: "MF" },
+      { num: 17, name: "Orbelín Pineda", pos: "MF" },
+      { num: 10, name: "Alexis Vega", pos: "FW" },
+      { num: 20, name: "Henry Martín", pos: "FW" }
+    ]
+  },
+  "CAN": {
+    starters: [
+      { num: 16, name: "Maxime Crépeau", pos: "GK" },
+      { num: 2, name: "Alistair Johnston", pos: "DF" },
+      { num: 15, name: "Moïse Bombito", pos: "DF" },
+      { num: 13, name: "Derek Cornelius", pos: "DF" },
+      { num: 19, name: "Alphonso Davies*", pos: "DF" },
+      { num: 7, name: "Stephen Eustáquio", pos: "MF" },
+      { num: 8, name: "Ismaël Koné", pos: "MF" },
+      { num: 21, name: "Jonathan Osorio", pos: "MF" },
+      { num: 11, name: "Tajon Buchanan", pos: "FW" },
+      { num: 9, name: "Cyle Larin", pos: "FW" },
+      { num: 10, name: "Jonathan David", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Dayne St. Clair", pos: "GK" },
+      { num: 4, name: "Kamal Miller", pos: "DF" },
+      { num: 22, name: "Richie Laryea", pos: "DF" },
+      { num: 6, name: "Samuel Piette", pos: "MF" },
+      { num: 23, name: "Liam Millar", pos: "FW" },
+      { num: 14, name: "Jacob Shaffelburg", pos: "FW" }
+    ]
+  },
+  "ESP": {
+    starters: [
+      { num: 23, name: "Unai Simón", pos: "GK" },
+      { num: 2, name: "Dani Carvajal", pos: "DF" },
+      { num: 3, name: "Robin Le Normand", pos: "DF" },
+      { num: 14, name: "Aymeric Laporte", pos: "DF" },
+      { num: 24, name: "Marc Cucurella", pos: "DF" },
+      { num: 16, name: "Rodri Hernández*", pos: "MF" },
+      { num: 8, name: "Fabián Ruiz", pos: "MF" },
+      { num: 10, name: "Dani Olmo", pos: "MF" },
+      { num: 19, name: "Lamine Yamal", pos: "FW" },
+      { num: 17, name: "Nico Williams", pos: "FW" },
+      { num: 7, name: "Álvaro Morata", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "David Raya", pos: "GK" },
+      { num: 5, name: "Dani Vivian", pos: "DF" },
+      { num: 12, name: "Alejandro Grimaldo", pos: "DF" },
+      { num: 18, name: "Martin Zubimendi", pos: "MF" },
+      { num: 20, name: "Pedri González", pos: "MF" },
+      { num: 21, name: "Mikel Oyarzabal", pos: "FW" }
+    ]
+  },
+  "GER": {
+    starters: [
+      { num: 22, name: "Marc-André ter Stegen", pos: "GK" },
+      { num: 6, name: "Joshua Kimmich", pos: "DF" },
+      { num: 2, name: "Antonio Rüdiger*", pos: "DF" },
+      { num: 4, name: "Jonathan Tah", pos: "DF" },
+      { num: 3, name: "David Raum", pos: "DF" },
+      { num: 23, name: "Robert Andrich", pos: "MF" },
+      { num: 21, name: "İlkay Gündoğan", pos: "MF" },
+      { num: 10, name: "Jamal Musiala", pos: "MF" },
+      { num: 17, name: "Florian Wirtz", pos: "MF" },
+      { num: 19, name: "Leroy Sané", pos: "FW" },
+      { num: 7, name: "Kai Havertz", pos: "FW" }
+    ],
+    subs: [
+      { num: 12, name: "Oliver Baumann", pos: "GK" },
+      { num: 15, name: "Nico Schlotterbeck", pos: "DF" },
+      { num: 20, name: "Maximilian Mittelstädt", pos: "DF" },
+      { num: 5, name: "Pascal Groß", pos: "MF" },
+      { num: 13, name: "Thomas Müller", pos: "MF" },
+      { num: 9, name: "Niclas Füllkrug", pos: "FW" }
+    ]
+  },
+  "POR": {
+    starters: [
+      { num: 22, name: "Diogo Costa", pos: "GK" },
+      { num: 2, name: "João Cancelo", pos: "DF" },
+      { num: 4, name: "Rúben Dias", pos: "DF" },
+      { num: 3, name: "Pepe", pos: "DF" },
+      { num: 19, name: "Nuno Mendes", pos: "DF" },
+      { num: 6, name: "João Palhinha", pos: "MF" },
+      { num: 23, name: "Vitinha", pos: "MF" },
+      { num: 8, name: "Bruno Fernandes*", pos: "MF" },
+      { num: 10, name: "Bernardo Silva", pos: "FW" },
+      { num: 17, name: "Rafael Leão", pos: "FW" },
+      { num: 7, name: "Cristiano Ronaldo", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Rui Patrício", pos: "GK" },
+      { num: 5, name: "Diogo Dalot", pos: "DF" },
+      { num: 14, name: "Gonçalo Inácio", pos: "DF" },
+      { num: 15, name: "João Neves", pos: "MF" },
+      { num: 21, name: "Diogo Jota", pos: "FW" },
+      { num: 11, name: "João Félix", pos: "FW" }
+    ]
+  },
+  "COL": {
+    starters: [
+      { num: 12, name: "Camilo Vargas", pos: "GK" },
+      { num: 21, name: "Daniel Muñoz", pos: "DF" },
+      { num: 23, name: "Davinson Sánchez", pos: "DF" },
+      { num: 2, name: "Carlos Cuesta", pos: "DF" },
+      { num: 17, name: "Johan Mojica", pos: "DF" },
+      { num: 16, name: "Jefferson Lerma", pos: "MF" },
+      { num: 6, name: "Richard Ríos", pos: "MF" },
+      { num: 10, name: "James Rodríguez*", pos: "MF" },
+      { num: 11, name: "Jhon Arias", pos: "FW" },
+      { num: 7, name: "Luis Díaz", pos: "FW" },
+      { num: 9, name: "Jhon Córdoba", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "David Ospina", pos: "GK" },
+      { num: 4, name: "Santiago Arias", pos: "DF" },
+      { num: 13, name: "Yerry Mina", pos: "DF" },
+      { num: 5, name: "Kevin Castaño", pos: "MF" },
+      { num: 20, name: "Juan Fernando Quintero", pos: "MF" },
+      { num: 19, name: "Rafael Santos Borré", pos: "FW" }
+    ]
+  },
+  "URU": {
+    starters: [
+      { num: 1, name: "Sergio Rochet", pos: "GK" },
+      { num: 8, name: "Nahitan Nández", pos: "DF" },
+      { num: 4, name: "Ronald Araújo", pos: "DF" },
+      { num: 2, name: "José María Giménez", pos: "DF" },
+      { num: 16, name: "Mathías Olivera", pos: "DF" },
+      { num: 5, name: "Manuel Ugarte", pos: "MF" },
+      { num: 15, name: "Federico Valverde*", pos: "MF" },
+      { num: 7, name: "Nicolás de la Cruz", pos: "MF" },
+      { num: 11, name: "Facundo Pellistri", pos: "FW" },
+      { num: 20, name: "Maximiliano Araújo", pos: "FW" },
+      { num: 19, name: "Darwin Núñez", pos: "FW" }
+    ],
+    subs: [
+      { num: 23, name: "Santiago Mele", pos: "GK" },
+      { num: 13, name: "Guillermo Varela", pos: "DF" },
+      { num: 3, name: "Sebastián Cáceres", pos: "DF" },
+      { num: 6, name: "Rodrigo Bentancur", pos: "MF" },
+      { num: 10, name: "Giorgian de Arrascaeta", pos: "MF" },
+      { num: 9, name: "Luis Suárez", pos: "FW" }
+    ]
+  },
+  "NED": {
+    starters: [
+      { num: 1, name: "Bart Verbruggen", pos: "GK" },
+      { num: 22, name: "Denzel Dumfries", pos: "DF" },
+      { num: 6, name: "Stefan de Vrij", pos: "DF" },
+      { num: 4, name: "Virgil van Dijk*", pos: "DF" },
+      { num: 5, name: "Nathan Aké", pos: "DF" },
+      { num: 24, name: "Jerdy Schouten", pos: "MF" },
+      { num: 14, name: "Tijjani Reijnders", pos: "MF" },
+      { num: 7, name: "Xavi Simons", pos: "MF" },
+      { num: 25, name: "Jeremie Frimpong", pos: "FW" },
+      { num: 11, name: "Cody Gakpo", pos: "FW" },
+      { num: 10, name: "Memphis Depay", pos: "FW" }
+    ],
+    subs: [
+      { num: 13, name: "Mark Flekken", pos: "GK" },
+      { num: 3, name: "Matthijs de Ligt", pos: "DF" },
+      { num: 15, name: "Micky van de Ven", pos: "DF" },
+      { num: 16, name: "Joey Veerman", pos: "MF" },
+      { num: 8, name: "Georginio Wijnaldum", pos: "MF" },
+      { num: 9, name: "Wout Weghorst", pos: "FW" }
+    ]
+  },
+  "JPN": {
+    starters: [
+      { num: 12, name: "Zion Suzuki", pos: "GK" },
+      { num: 2, name: "Yukinari Sugawara", pos: "DF" },
+      { num: 4, name: "Ko Itakura", pos: "DF" },
+      { num: 3, name: "Shogo Taniguchi", pos: "DF" },
+      { num: 21, name: "Hiroki Ito", pos: "DF" },
+      { num: 6, name: "Wataru Endo*", pos: "MF" },
+      { num: 5, name: "Hidemasa Morita", pos: "MF" },
+      { num: 20, name: "Takefusa Kubo", pos: "MF" },
+      { num: 8, name: "Daichi Kamada", pos: "MF" },
+      { num: 7, name: "Kaoru Mitoma", pos: "FW" },
+      { num: 9, name: "Ayase Ueda", pos: "FW" }
+    ],
+    subs: [
+      { num: 1, name: "Keisuke Osako", pos: "GK" },
+      { num: 15, name: "Koki Machida", pos: "DF" },
+      { num: 10, name: "Ritsu Doan", pos: "MF" },
+      { num: 11, name: "Takumi Minamino", pos: "MF" },
+      { num: 13, name: "Keito Nakamura", pos: "FW" },
+      { num: 18, name: "Takuma Asano", pos: "FW" }
+    ]
+  },
+  "KOR": {
+    starters: [
+      { num: 21, name: "Jo Hyeon-woo", pos: "GK" },
+      { num: 22, name: "Seol Young-woo", pos: "DF" },
+      { num: 4, name: "Kim Min-jae", pos: "DF" },
+      { num: 15, name: "Jung Seung-hyun", pos: "DF" },
+      { num: 3, name: "Kim Jin-su", pos: "DF" },
+      { num: 6, name: "Hwang In-beom", pos: "MF" },
+      { num: 5, name: "Park Yong-woo", pos: "MF" },
+      { num: 10, name: "Lee Jae-sung", pos: "MF" },
+      { num: 18, name: "Lee Kang-in", pos: "MF" },
+      { num: 11, name: "Hwang Hee-chan", pos: "FW" },
+      { num: 7, name: "Son Heung-min*", pos: "FW" }
+    ],
+    subs: [
+      { num: 12, name: "Song Bum-keun", pos: "GK" },
+      { num: 19, name: "Kim Young-gwon", pos: "DF" },
+      { num: 2, name: "Kim Tae-hwan", pos: "DF" },
+      { num: 8, name: "Hong Hyun-seok", pos: "MF" },
+      { num: 17, name: "Jeong Woo-yeong", pos: "MF" },
+      { num: 9, name: "Cho Gue-sung", pos: "FW" }
+    ]
+  },
+  "MAR": {
+    starters: [
+      { num: 1, name: "Yassine Bounou", pos: "GK" },
+      { num: 2, name: "Achraf Hakimi*", pos: "DF" },
+      { num: 20, name: "Achraf Dari", pos: "DF" },
+      { num: 5, name: "Nayef Aguerd", pos: "DF" },
+      { num: 25, name: "Yahia Attiyat Allah", pos: "DF" },
+      { num: 4, name: "Sofyan Amrabat", pos: "MF" },
+      { num: 8, name: "Azzedine Ounahi", pos: "MF" },
+      { num: 14, name: "Bilal El Khannouss", pos: "MF" },
+      { num: 7, name: "Hakim Ziyech", pos: "FW" },
+      { num: 21, name: "Amine Adli", pos: "FW" },
+      { num: 19, name: "Youssef En-Nesyri", pos: "FW" }
+    ],
+    subs: [
+      { num: 12, name: "Munir Mohamedi", pos: "GK" },
+      { num: 22, name: "Abdel Abqar", pos: "DF" },
+      { num: 3, name: "Noussair Mazraoui", pos: "DF" },
+      { num: 9, name: "Tarik Tissoudali", pos: "FW" },
+      { num: 10, name: "Brahim Díaz", pos: "FW" },
+      { num: 11, name: "Soufiane Rahimi", pos: "FW" }
+    ]
+  }
+};
+
 const teamsDb = {};
 Object.keys(baseTeams).forEach(code => {
   const base = baseTeams[code];
   
   // Starters templates based on positions
-  const startersList = [
+  let startersList = [
     { num: 1, name: "Goalkeeper One", pos: "GK" },
     { num: 2, name: "Right Back Two", pos: "DF" },
     { num: 3, name: "Left Back Three", pos: "DF" },
@@ -608,67 +979,19 @@ Object.keys(baseTeams).forEach(code => {
     { num: 9, name: "Striker Nine", pos: "FW" }
   ];
 
-  // Specific starters customization for top teams to look realistic
-  if (code === "USA") {
-    startersList[0].name = "Matt Turner";
-    startersList[1].name = "Sergiño Dest"; startersList[1].num = 2;
-    startersList[2].name = "Antonee Robinson"; startersList[2].num = 3;
-    startersList[3].name = "Tyler Adams"; startersList[3].num = 4;
-    startersList[4].name = "Tim Ream"; startersList[4].num = 13;
-    startersList[5].name = "Yunis Musah"; startersList[5].num = 6;
-    startersList[6].name = "Weston McKennie"; startersList[6].num = 8;
-    startersList[7].name = "Christian Pulisic*"; startersList[7].num = 10;
-    startersList[8].name = "Giovanni Reyna"; startersList[8].num = 7;
-    startersList[9].name = "Timothy Weah"; startersList[9].num = 21;
-    startersList[10].name = "Folarin Balogun"; startersList[10].num = 9;
-  } else if (code === "ARG") {
-    startersList[0].name = "Emiliano Martínez"; startersList[0].num = 23;
-    startersList[1].name = "Nahuel Molina"; startersList[1].num = 26;
-    startersList[2].name = "Nicolás Tagliafico"; startersList[2].num = 3;
-    startersList[3].name = "Nicolás Otamendi"; startersList[3].num = 19;
-    startersList[4].name = "Cristian Romero"; startersList[4].num = 13;
-    startersList[5].name = "Rodrigo De Paul"; startersList[5].num = 7;
-    startersList[6].name = "Enzo Fernández"; startersList[6].num = 24;
-    startersList[7].name = "Lionel Messi*"; startersList[7].num = 10;
-    startersList[8].name = "Alexis Mac Allister"; startersList[8].num = 20;
-    startersList[9].name = "Lautaro Martínez"; startersList[9].num = 22;
-    startersList[10].name = "Julián Álvarez"; startersList[10].num = 9;
-  } else if (code === "BRA") {
-    startersList[0].name = "Alisson Becker"; startersList[0].num = 1;
-    startersList[1].name = "Danilo"; startersList[1].num = 2;
-    startersList[2].name = "Wendell"; startersList[2].num = 6;
-    startersList[3].name = "Éder Militão"; startersList[3].num = 3;
-    startersList[4].name = "Marquinhos"; startersList[4].num = 4;
-    startersList[5].name = "Bruno Guimarães"; startersList[5].num = 5;
-    startersList[6].name = "João Gomes"; startersList[6].num = 15;
-    startersList[7].name = "Vinícius Júnior*"; startersList[7].num = 7;
-    startersList[8].name = "Lucas Paquetá"; startersList[8].num = 8;
-    startersList[9].name = "Raphinha"; startersList[9].num = 11;
-    startersList[10].name = "Rodrygo Goes"; startersList[10].num = 10;
-  } else if (code === "FRA") {
-    startersList[0].name = "Mike Maignan"; startersList[0].num = 16;
-    startersList[1].name = "Jules Koundé"; startersList[1].num = 5;
-    startersList[2].name = "Théo Hernandez"; startersList[2].num = 22;
-    startersList[3].name = "Dayot Upamecano"; startersList[3].num = 4;
-    startersList[4].name = "William Saliba"; startersList[4].num = 17;
-    startersList[5].name = "Aurélien Tchouaméni"; startersList[5].num = 8;
-    startersList[6].name = "N'Golo Kanté"; startersList[6].num = 13;
-    startersList[7].name = "Kylian Mbappé*"; startersList[7].num = 10;
-    startersList[8].name = "Antoine Griezmann"; startersList[8].num = 7;
-    startersList[9].name = "Ousmane Dembélé"; startersList[9].num = 11;
-    startersList[10].name = "Marcus Thuram"; startersList[10].num = 15;
-  } else if (code === "ENG") {
-    startersList[0].name = "Jordan Pickford"; startersList[0].num = 1;
-    startersList[1].name = "Kyle Walker"; startersList[1].num = 2;
-    startersList[2].name = "Luke Shaw"; startersList[2].num = 3;
-    startersList[3].name = "John Stones"; startersList[3].num = 5;
-    startersList[4].name = "Marc Guéhi"; startersList[4].num = 6;
-    startersList[5].name = "Declan Rice"; startersList[5].num = 4;
-    startersList[6].name = "Trent Alexander-Arnold"; startersList[6].num = 8;
-    startersList[7].name = "Jude Bellingham*"; startersList[7].num = 10;
-    startersList[8].name = "Bukayo Saka"; startersList[8].num = 7;
-    startersList[9].name = "Phil Foden"; startersList[9].num = 11;
-    startersList[10].name = "Harry Kane"; startersList[10].num = 9;
+  // Substitutes template
+  let subsList = [
+    { num: 12, name: "Sub Goalkeeper", pos: "GK" },
+    { num: 14, name: "Sub Defender A", pos: "DF" },
+    { num: 15, name: "Sub Defender B", pos: "DF" },
+    { num: 16, name: "Sub Midfielder A", pos: "MF" },
+    { num: 17, name: "Sub Midfielder B", pos: "MF" },
+    { num: 18, name: "Sub Forward", pos: "FW" }
+  ];
+
+  if (customSquads[code]) {
+    startersList = JSON.parse(JSON.stringify(customSquads[code].starters));
+    subsList = JSON.parse(JSON.stringify(customSquads[code].subs));
   } else {
     // Fill in default naming for other teams to ensure completeness
     startersList.forEach(player => {
@@ -681,34 +1004,7 @@ Object.keys(baseTeams).forEach(code => {
       };
       player.name = positionLabels[player.pos];
     });
-  }
 
-  // Substitutes template
-  const subsList = [
-    { num: 12, name: "Sub Goalkeeper", pos: "GK" },
-    { num: 14, name: "Sub Defender A", pos: "DF" },
-    { num: 15, name: "Sub Defender B", pos: "DF" },
-    { num: 16, name: "Sub Midfielder A", pos: "MF" },
-    { num: 17, name: "Sub Midfielder B", pos: "MF" },
-    { num: 18, name: "Sub Forward", pos: "FW" }
-  ];
-
-  // Specific subs customization for top teams
-  if (code === "USA") {
-    subsList[0].name = "Ethan Horvath"; subsList[0].num = 18;
-    subsList[1].name = "Miles Robinson"; subsList[1].num = 12;
-    subsList[2].name = "Johnny Cardoso"; subsList[2].num = 15;
-    subsList[3].name = "Brenden Aaronson"; subsList[3].num = 11;
-    subsList[4].name = "Haji Wright"; subsList[4].num = 19;
-    subsList[5].name = "Ricardo Pepi"; subsList[5].num = 22;
-  } else if (code === "ARG") {
-    subsList[0].name = "Franco Armani"; subsList[0].num = 1;
-    subsList[1].name = "Gonzalo Montiel"; subsList[1].num = 4;
-    subsList[2].name = "German Pezzella"; subsList[2].num = 6;
-    subsList[3].name = "Leandro Paredes"; subsList[3].num = 5;
-    subsList[4].name = "Ángel Di María"; subsList[4].num = 11;
-    subsList[5].name = "Nicolás González"; subsList[5].num = 15;
-  } else {
     subsList.forEach(player => {
       const positionLabels = {
         "GK": `Backup GK`,
