@@ -3,6 +3,511 @@
    ========================================================================== */
 
 // --- Complete 48 Teams Database ---
+
+// --- Internationalization (i18n) System ---
+let currentLanguage = localStorage.getItem("wc26_language") || "en";
+
+const i18n = {
+  en: {
+    "brand-tagline": "FIFA WORLD CUP",
+    "brand-title": "26™ fixture hub",
+    "my-teams": "My Teams:",
+    "none-followed": "None followed",
+    "update-results": "Update Results",
+    "tab-calendar": "Match Calendar",
+    "tab-bracket": "Knockout Bracket",
+    "tab-standings": "Group Standings",
+    "search-placeholder": "Search teams (e.g. Argentina, USA...)",
+    "filter-favorites": "Show only followed teams",
+    "bracket-instructions": "Interactive Bracket: Track the road to the Final. Click on active matches to view full match centers.",
+    "standings-instructions": "Current standings. Points are calculated dynamically based on match results from the live data feed.",
+    "onboarding-title": "Welcome to FIFA 26™ Hub",
+    "onboarding-subtitle": "Personalize your tournament dashboard before we kick off!",
+    "onboarding-step1": "1. Select Your Timezone",
+    "onboarding-step1-hint": "Match times will automatically convert to your selected local time.",
+    "onboarding-step2": "2. Follow Your Teams (Max 4)",
+    "onboarding-step2-hint": "Get highlights, quick notifications, and filter matches for your selected teams.",
+    "selection-counter": "Selected: {count} / 4",
+    "btn-save-onboarding": "Enter Fixture Hub",
+    "btn-close-match-dialog": "Close match details",
+    "footer-text": "© 2026 FIFA World Cup™ Fixture Dashboard. Built with premium web technologies. In accordance with the 2026 tournament branding.",
+    // Stages
+    "Group A": "Group A", "Group B": "Group B", "Group C": "Group C", "Group D": "Group D",
+    "Group E": "Group E", "Group F": "Group F", "Group G": "Group G", "Group H": "Group H",
+    "Group I": "Group I", "Group J": "Group J", "Group K": "Group K", "Group L": "Group L",
+    "Round of 32": "Round of 32",
+    "Round of 16": "Round of 16",
+    "Quarter-finals": "Quarter-finals",
+    "Semi-finals": "Semi-finals",
+    "Third Place": "Third Place",
+    "Final": "Final",
+    // Status
+    "FINISHED": "Finished",
+    "LIVE": "Live",
+    "SCHEDULED": "Scheduled",
+    "Full Time": "Full Time",
+    "star-followed-match": "★ Followed Match",
+    // Details tab
+    "lineups-tab": "Lineups & Squads",
+    "tactics-tab": "Tactical Styles & Stats",
+    "starting-lineup": "Starting XI",
+    "substitutes": "Substitutes",
+    "tactical-style": "Tactical Style",
+    "team-attributes": "Team Attributes",
+    "star-player-marked": "* Star player",
+    "world-cup-history": "World Cup History",
+    "participations": "Participations",
+    "best-finish": "Best Finish",
+    "attack": "Attack",
+    "defense": "Defense",
+    "speed": "Speed",
+    "control": "Control",
+    "positional-style": "Positional Style",
+    "squad-lineups-pending": "Squad lineups will be available closer to kickoff.",
+    "tactics-pending": "Tactical style details pending final group alignment.",
+    "team-squad": "{team} Squad",
+    "team-history": "{team} History",
+    "match-singular": "match",
+    "match-plural": "matches",
+    // Toasts & Alerts
+    "toast-success-update": "Match results updated with latest data!",
+    "toast-error-update": "Error updating results. Check fixtures.json.",
+    "toast-timezone-change": "Timezone changed to {timezone}",
+    "toast-onboarded": "Dashboard configured successfully!",
+    "toast-max-teams": "You can follow up to 4 teams maximum!",
+    "no-matches-found": "No fixtures match your current filters. Try adjusting search or choosing another date.",
+    // Tactical Styles
+    "High-Pressing Transition": "High-Pressing Transition",
+    "High Energy & Flank Play": "High Energy & Flank Play",
+    "Dynamic Speed & Counter": "Dynamic Speed & Counter",
+    "High Speed & Direct Flank Play": "High Speed & Direct Flank Play",
+    "Physical & Counter-pressing": "Physical & Counter-pressing",
+    "Structured Possession & Direct Play": "Structured Possession & Direct Play",
+    "Associative Control & Press": "Associative Control & Press",
+    "Joga Bonito (Attacking Samba)": "Joga Bonito (Attacking Samba)",
+    "Aggressive Vertical Press": "Aggressive Vertical Press",
+    "Dynamic Speed & Creativity": "Dynamic Speed & Creativity",
+    "Physical & Fast Transitions": "Physical & Fast Transitions",
+    "Speed & Quick Counter": "Speed & Quick Counter",
+    "High Press & Direct Play": "High Press & Direct Play",
+    "Direct Athletic Counter": "Direct Athletic Counter",
+    "Tactical Possession": "Tactical Possession",
+    "Vertically Sharp Possession": "Vertically Sharp Possession",
+    "Fluid Gegenpressing": "Fluid Gegenpressing",
+    "Fluid Positional Play": "Fluid Positional Play",
+    "Total Football Legacy": "Total Football Legacy",
+    "Explosive Technical Offense": "Explosive Technical Offense",
+    "Midfield Orchestration": "Midfield Orchestration",
+    "Direct Play & Overloads": "Direct Play & Overloads",
+    "Disciplined Tactical Buildup": "Disciplined Tactical Buildup",
+    "High-Intensity Pressing": "High-Intensity Pressing",
+    "Creative Flair & Speed": "Creative Flair & Speed",
+    "Direct Counter & Aerial Threat": "Direct Counter & Aerial Threat",
+    "Disciplined Low-Block Counter": "Disciplined Low-Block Counter",
+    "Passionate & Direct Attack": "Passionate & Direct Attack",
+    "Organized Collective Press": "Organized Collective Press",
+    "High Grit & Wing Crosses": "High Grit & Wing Crosses",
+    "Compact Mid-Block Counter": "Compact Mid-Block Counter",
+    "Physical Pace & Width": "Physical Pace & Width",
+    "Athletic & Dynamic Offense": "Athletic & Dynamic Offense",
+    "Compact Counter-Attack": "Compact Counter-Attack",
+    "Physical & Direct": "Physical & Direct",
+    "Athletic Build-Up & Flair": "Athletic Build-Up & Flair",
+    "Technical possession & counters": "Technical possession & counters",
+    "Disciplined Low-Block": "Disciplined Low-Block",
+    "Fast Flank Overloads": "Fast Flank Overloads",
+    "High-Speed Pressing": "High-Speed Pressing",
+    "Tenacious Direct Transitions": "Tenacious Direct Transitions",
+    "High-Cross & Physical Grit": "High-Cross & Physical Grit",
+    "Low-Block Counter-Attack": "Low-Block Counter-Attack",
+    "Tactical High Line": "Tactical High Line",
+    "Methodical Buildup": "Methodical Buildup",
+    "Counter & Physicality": "Counter & Physicality",
+    "Direct Combative Play": "Direct Combative Play",
+    "Organized Aerial Threat": "Organized Aerial Threat",
+    // Table Headers
+    "col-team": "Team",
+    "col-pts": "Pts",
+    "col-pl": "Pl",
+    "col-w": "W",
+    "col-d": "D",
+    "col-l": "L",
+    "col-gd": "GD"
+  },
+  es: {
+    "brand-tagline": "COPA MUNDIAL DE LA FIFA",
+    "brand-title": "Centro de Partidos 26™",
+    "my-teams": "Mis Equipos:",
+    "none-followed": "Ninguno seleccionado",
+    "update-results": "Actualizar Resultados",
+    "tab-calendar": "Calendario de Juegos",
+    "tab-bracket": "Fase de Eliminación",
+    "tab-standings": "Tablas de Grupos",
+    "search-placeholder": "Buscar selecciones (ej. Argentina, USA...)",
+    "filter-favorites": "Mostrar solo mis equipos",
+    "bracket-instructions": "Llave Interactiva: Sigue el camino a la Final. Haz clic en los partidos para ver detalles de las selecciones.",
+    "standings-instructions": "Posiciones actuales. Los puntos se calculan dinámicamente según los resultados de los partidos.",
+    "onboarding-title": "Bienvenido a FIFA 26™ Hub",
+    "onboarding-subtitle": "¡Personaliza tu panel de control antes del silbatazo inicial!",
+    "onboarding-step1": "1. Selecciona tu Zona Horaria",
+    "onboarding-step1-hint": "Las horas de los partidos se convertirán automáticamente a tu hora local.",
+    "onboarding-step2": "2. Selecciona tus Equipos (Máx 4)",
+    "onboarding-step2-hint": "Obtén destaques y filtra el calendario de juegos para tus selecciones elegidas.",
+    "selection-counter": "Seleccionados: {count} / 4",
+    "btn-save-onboarding": "Entrar al Centro de Partidos",
+    "btn-close-match-dialog": "Cerrar detalles del partido",
+    "footer-text": "© 2026 Tablero de Partidos de la Copa Mundial de la FIFA™. Desarrollado con tecnologías web premium. Conforme a la identidad del torneo.",
+    // Stages
+    "Group A": "Grupo A", "Group B": "Grupo B", "Group C": "Grupo C", "Group D": "Grupo D",
+    "Group E": "Grupo E", "Group F": "Grupo F", "Group G": "Grupo G", "Group H": "Grupo H",
+    "Group I": "Group I", "Group J": "Grupo J", "Group K": "Grupo K", "Group L": "Grupo L",
+    "Round of 32": "Dieciseisavos de final",
+    "Round of 16": "Octavos de final",
+    "Quarter-finals": "Cuartos de final",
+    "Semi-finals": "Semifinales",
+    "Third Place": "Tercer Puesto",
+    "Final": "Final",
+    // Status
+    "FINISHED": "Finalizado",
+    "LIVE": "En Vivo",
+    "SCHEDULED": "Programado",
+    "Full Time": "Tiempo Completo",
+    "star-followed-match": "★ Partido Seguido",
+    // Details tab
+    "lineups-tab": "Alineaciones y Equipos",
+    "tactics-tab": "Estilos Tácticos y Stats",
+    "starting-lineup": "Alineación Titular",
+    "substitutes": "Suplentes",
+    "tactical-style": "Estilo Táctico",
+    "team-attributes": "Atributos del Equipo",
+    "star-player-marked": "* Jugador estrella",
+    "world-cup-history": "Historial en Mundiales",
+    "participations": "Participaciones",
+    "best-finish": "Mejor Resultado",
+    "attack": "Ataque",
+    "defense": "Defensa",
+    "speed": "Velocidad",
+    "control": "Control",
+    "positional-style": "Estilo Posicional",
+    "squad-lineups-pending": "Las alineaciones estarán disponibles cerca del comienzo del partido.",
+    "tactics-pending": "Detalles tácticos pendientes de la clasificación final de grupos.",
+    "team-squad": "Plantilla de {team}",
+    "team-history": "Historial de {team}",
+    "match-singular": "partido",
+    "match-plural": "partidos",
+    // Toasts & Alerts
+    "toast-success-update": "¡Resultados de partidos actualizados con los datos vigentes!",
+    "toast-error-update": "Error al actualizar los resultados. Revisa fixtures.json.",
+    "toast-timezone-change": "Zona horaria cambiada a {timezone}",
+    "toast-onboarded": "¡Panel de control configurado con éxito!",
+    "toast-max-teams": "¡Puedes seguir a un máximo de 4 equipos!",
+    "no-matches-found": "No hay partidos que coincidan con los filtros. Intenta ajustar la búsqueda o elige otra fecha.",
+    // Team names
+    "USA": "Estados Unidos", "MEX": "México", "CAN": "Canadá", "RSA": "Sudáfrica",
+    "CZE": "República Checa", "BIH": "Bosnia y Herzegovina",
+    "ARG": "Argentina", "BRA": "Brasil", "URU": "Uruguay", "COL": "Colombia",
+    "ECU": "Ecuador", "HAI": "Haití", "PAR": "Paraguay",
+    "FRA": "Francia", "ENG": "Inglaterra", "ESP": "España", "GER": "Alemania",
+    "CUW": "Curazao", "NED": "Países Bajos", "POR": "Portugal", "CRO": "Croacia",
+    "BEL": "Bélgica", "SUI": "Suiza", "AUT": "Austria", "CPV": "Cabo Verde",
+    "NOR": "Noruega", "JOR": "Jordania", "TUR": "Turquía", "SWE": "Suecia",
+    "SCO": "Escocia",
+    "MAR": "Marruecos", "SEN": "Senegal", "COD": "R. D. Congo",
+    "EGY": "Egipto", "PAN": "Panamá", "CIV": "Costa de Marfil", "ALG": "Argelia",
+    "TUN": "Túnez", "GHA": "Ghana",
+    "JPN": "Japón", "KOR": "Corea del Sur", "AUS": "Australia", "IRN": "Irán",
+    "KSA": "Arabia Saudita", "QAT": "Catar", "UZB": "Uzbekistán", "IRQ": "Irak",
+    "NZL": "Nueva Zelanda",
+    // Tactical Styles
+    "High-Pressing Transition": "Transición de Alta Presión",
+    "High Energy & Flank Play": "Alta Energía y Juego Lateral",
+    "Dynamic Speed & Counter": "Velocidad Dinámica y Contra",
+    "High Speed & Direct Flank Play": "Alta Velocidad y Centros",
+    "Physical & Counter-pressing": "Físico y Presión Tras Pérdida",
+    "Structured Possession & Direct Play": "Juego Directo y Posición",
+    "Associative Control & Press": "Control Asociativo y Presión",
+    "Joga Bonito (Attacking Samba)": "Joga Bonito (Samba Atacante)",
+    "Aggressive Vertical Press": "Presión Vertical Agresiva",
+    "Dynamic Speed & Creativity": "Velocidad Dinámica y Creatividad",
+    "Physical & Fast Transitions": "Transiciones Rápidas y Físicas",
+    "Speed & Quick Counter": "Velocidad y Contra Rápida",
+    "High Press & Direct Play": "Presión Alta y Juego Directo",
+    "Direct Athletic Counter": "Contraataque Atlético Directo",
+    "Tactical Possession": "Posesión Táctica",
+    "Vertically Sharp Possession": "Posesión Vertical Rápida",
+    "Fluid Gegenpressing": "Gegenpressing Fluido",
+    "Fluid Positional Play": "Juego Posicional Fluido",
+    "Total Football Legacy": "Legado de Fútbol Total",
+    "Explosive Technical Offense": "Ataque Técnico Explosivo",
+    "Midfield Orchestration": "Orquestación del Mediocampo",
+    "Direct Play & Overloads": "Juego Directo y Sobrecargas",
+    "Disciplined Tactical Buildup": "Creación Táctica Disciplinada",
+    "High-Intensity Pressing": "Presión de Alta Intensidad",
+    "Creative Flair & Speed": "Estilo Creativo y Velocidad",
+    "Direct Counter & Aerial Threat": "Contra Directo y Altura",
+    "Disciplined Low-Block Counter": "Contra de Bloque Bajo Disciplinado",
+    "Passionate & Direct Attack": "Ataque Directo y Pasión",
+    "Organized Collective Press": "Presión Colectiva Organizada",
+    "High Grit & Wing Crosses": "Garra y Centros Laterales",
+    "Compact Mid-Block Counter": "Contra de Bloque Medio Compacto",
+    "Physical Pace & Width": "Ritmo Físico y Amplitud",
+    "Athletic & Dynamic Offense": "Ataque Atlético y Dinámico",
+    "Compact Counter-Attack": "Contraataque Compacto",
+    "Physical & Direct": "Físico y Directo",
+    "Athletic Build-Up & Flair": "Creación Atlética y Estilo",
+    "Technical possession & counters": "Posesión Técnica y Contras",
+    "Disciplined Low-Block": "Bloque Bajo Disciplinado",
+    "Fast Flank Overloads": "Sobrecarga de Bandas Rápida",
+    "High-Speed Pressing": "Presión de Alta Velocidad",
+    "Tenacious Direct Transitions": "Transiciones Directas Tenaces",
+    "High-Cross & Physical Grit": "Centros Altos y Garra Física",
+    "Low-Block Counter-Attack": "Contra de Bloque Bajo",
+    "Tactical High Line": "Línea Alta Táctica",
+    "Methodical Buildup": "Creación Metódica",
+    "Counter & Physicality": "Contra y Físico",
+    "Direct Combative Play": "Juego Directo Combativo",
+    "Organized Aerial Threat": "Amenaza Aérea Organizada",
+    // Table Headers
+    "col-team": "Equipo",
+    "col-pts": "Pts",
+    "col-pl": "PJ",
+    "col-w": "PG",
+    "col-d": "PE",
+    "col-l": "PP",
+    "col-gd": "DG"
+  }
+};
+
+function translate(key, replacements = {}, locale = currentLanguage) {
+  let text = i18n[locale]?.[key] || i18n["en"]?.[key] || key;
+  Object.keys(replacements).forEach(placeholder => {
+    text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+  });
+  return text;
+}
+
+function getTeamName(teamCode) {
+  return translate(teamCode) || teamsDb[teamCode]?.name || teamCode;
+}
+
+function getFlagUrl(teamCode) {
+  const team = teamsDb[teamCode];
+  if (!team) {
+    // Return a generic shield icon as transparent pixel/SVG
+    return "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='25' viewBox='0 0 40 25'><rect width='40' height='25' fill='%23131738'/><path d='M20,5 L30,10 L30,17 C30,22 20,24 20,24 C20,24 10,22 10,17 L10,10 Z' fill='%23ffd600' opacity='0.3'/></svg>";
+  }
+  return `https://flagcdn.com/w40/${team.flag}.png`;
+}
+
+function applyLanguage(lang) {
+  currentLanguage = lang;
+  localStorage.setItem("wc26_language", lang);
+
+  // Update elements with data-i18n attribute
+  document.querySelectorAll("[data-i18n]").forEach(elem => {
+    const key = elem.getAttribute("data-i18n");
+    if (i18n[lang] && i18n[lang][key]) {
+      elem.textContent = i18n[lang][key];
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(elem => {
+    const key = elem.getAttribute("data-i18n-placeholder");
+    if (i18n[lang] && i18n[lang][key]) {
+      elem.placeholder = i18n[lang][key];
+      // If it has aria-label we can also translate it
+      if (elem.hasAttribute("aria-label")) {
+        elem.setAttribute("aria-label", i18n[lang][key]);
+      }
+    }
+  });
+
+  // Render text for counters (Special case)
+  const counterText = document.getElementById("selection-counter-text");
+  if (counterText) {
+    const favCountSpan = document.getElementById("fav-count");
+    const countVal = favCountSpan ? favCountSpan.textContent : "0";
+    counterText.innerHTML = translate("selection-counter", { count: `<span id="fav-count">${countVal}</span>` });
+  }
+}
+
+// --- Dynamic Knockout Placeholder Resolution ---
+function resolveKnockoutTeams() {
+  const standings = {};
+  
+  // Find which team belongs to which group
+  const teamToGroup = {};
+  fixtures.forEach(match => {
+    if (match.stage.startsWith("Group")) {
+      teamToGroup[match.team1] = match.stage;
+      teamToGroup[match.team2] = match.stage;
+    }
+  });
+
+  // Initialize group standings array
+  Object.keys(teamsDb).forEach(code => {
+    const group = teamToGroup[code];
+    if (!group) return;
+    if (!standings[group]) {
+      standings[group] = [];
+    }
+    standings[group].push({
+      code: code,
+      pts: 0,
+      gd: 0,
+      gf: 0,
+      ga: 0,
+      wins: 0
+    });
+  });
+
+  // Sum scores of played group matches
+  fixtures.forEach(match => {
+    if (!match.stage.startsWith("Group")) return;
+    if (match.score1 === null || match.score2 === null) return;
+
+    const group = match.stage;
+    const team1Stats = standings[group].find(t => t.code === match.team1);
+    const team2Stats = standings[group].find(t => t.code === match.team2);
+
+    if (!team1Stats || !team2Stats) return;
+
+    const s1 = parseInt(match.score1, 10);
+    const s2 = parseInt(match.score2, 10);
+
+    team1Stats.gf += s1;
+    team1Stats.ga += s2;
+    team2Stats.gf += s2;
+    team2Stats.ga += s1;
+    team1Stats.gd = team1Stats.gf - team1Stats.ga;
+    team2Stats.gd = team2Stats.gf - team2Stats.ga;
+
+    if (s1 > s2) {
+      team1Stats.wins += 1;
+      team1Stats.pts += 3;
+    } else if (s1 < s2) {
+      team2Stats.wins += 1;
+      team2Stats.pts += 3;
+    } else {
+      team1Stats.pts += 1;
+      team2Stats.pts += 1;
+    }
+  });
+
+  // Sort teams in each group based on tiebreakers
+  const resolvedGroups = {};
+  Object.keys(standings).forEach(group => {
+    const groupTeams = [...standings[group]];
+    groupTeams.sort((a, b) => {
+      if (b.pts !== a.pts) return b.pts - a.pts;
+      if (b.gd !== a.gd) return b.gd - a.gd;
+      if (b.gf !== a.gf) return b.gf - a.gf;
+      return a.code.localeCompare(b.code);
+    });
+    resolvedGroups[group] = groupTeams;
+  });
+
+  // Extract all 3rd place teams and sort them to find top 8
+  const thirdPlaceTeams = [];
+  Object.keys(resolvedGroups).forEach(group => {
+    const teams = resolvedGroups[group];
+    if (teams.length >= 3) {
+      thirdPlaceTeams.push(teams[2]);
+    }
+  });
+
+  thirdPlaceTeams.sort((a, b) => {
+    if (b.pts !== a.pts) return b.pts - a.pts;
+    if (b.gd !== a.gd) return b.gd - a.gd;
+    if (b.gf !== a.gf) return b.gf - a.gf;
+    return a.code.localeCompare(b.code);
+  });
+
+  const top8ThirdPlace = thirdPlaceTeams.slice(0, 8).map(t => t.code);
+
+  const resolveTeam = (placeholder) => {
+    if (!placeholder) return "";
+    
+    // Group winners "1A", etc.
+    const groupWinnerMatch = placeholder.match(/^1([A-L])$/);
+    if (groupWinnerMatch) {
+      const letter = groupWinnerMatch[1];
+      const groupName = `Group ${letter}`;
+      const groupTeams = resolvedGroups[groupName];
+      const groupHasStarted = fixtures.some(m => m.stage === groupName && m.score1 !== null);
+      if (groupHasStarted && groupTeams && groupTeams.length > 0) {
+        return groupTeams[0].code;
+      }
+      return placeholder;
+    }
+
+    // Group runners up "2A", etc.
+    const groupRunnerUpMatch = placeholder.match(/^2([A-L])$/);
+    if (groupRunnerUpMatch) {
+      const letter = groupRunnerUpMatch[1];
+      const groupName = `Group ${letter}`;
+      const groupTeams = resolvedGroups[groupName];
+      const groupHasStarted = fixtures.some(m => m.stage === groupName && m.score1 !== null);
+      if (groupHasStarted && groupTeams && groupTeams.length > 1) {
+        return groupTeams[1].code;
+      }
+      return placeholder;
+    }
+
+    // Third place slots "3rd_1", etc.
+    const thirdPlaceMatch = placeholder.match(/^3rd_([1-8])$/);
+    if (thirdPlaceMatch) {
+      const index = parseInt(thirdPlaceMatch[1], 10) - 1;
+      const anyGroupStarted = fixtures.some(m => m.stage.startsWith("Group") && m.score1 !== null);
+      if (anyGroupStarted && index < top8ThirdPlace.length) {
+        return top8ThirdPlace[index];
+      }
+      return placeholder;
+    }
+
+    // Winner of prev match "W73", etc.
+    const winnerMatch = placeholder.match(/^W(\d+)$/);
+    if (winnerMatch) {
+      const prevMatchId = `m${winnerMatch[1]}`;
+      const prevMatch = fixtures.find(m => m.id === prevMatchId);
+      if (prevMatch && prevMatch.status === "FINISHED") {
+        const s1 = parseInt(prevMatch.score1, 10);
+        const s2 = parseInt(prevMatch.score2, 10);
+        if (s1 > s2) return prevMatch.team1;
+        if (s2 > s1) return prevMatch.team2;
+      }
+      return placeholder;
+    }
+
+    // Loser of prev match "L101", etc.
+    const loserMatch = placeholder.match(/^L(\d+)$/);
+    if (loserMatch) {
+      const prevMatchId = `m${loserMatch[1]}`;
+      const prevMatch = fixtures.find(m => m.id === prevMatchId);
+      if (prevMatch && prevMatch.status === "FINISHED") {
+        const s1 = parseInt(prevMatch.score1, 10);
+        const s2 = parseInt(prevMatch.score2, 10);
+        if (s1 < s2) return prevMatch.team1;
+        if (s2 < s1) return prevMatch.team2;
+      }
+      return placeholder;
+    }
+
+    return placeholder;
+  };
+
+  // Resolve knockout stages in order
+  for (let i = 73; i <= 104; i++) {
+    const matchId = `m${i}`;
+    const match = fixtures.find(m => m.id === matchId);
+    if (match) {
+      match.team1 = resolveTeam(match.team1);
+      match.team2 = resolveTeam(match.team2);
+    }
+  }
+}
+
 const baseTeams = {
   // North America
   "USA": { name: "United States", flag: "us", participations: 12, bestFinish: "Third Place (1930)", style: "High-Pressing Transition", attrs: { attack: 82, defense: 78, speed: 90, control: 74 }, star: "Christian Pulisic*" },
@@ -230,7 +735,6 @@ const timezonesList = [
 
 // --- INITIAL FIXTURES (All Scheduled with NO results - Tournament not started yet) ---
 const initialFixtures = [
-  // --- ROUND 1 OF GROUP STAGE ---
   {
     "id": "m1",
     "stage": "Group A",
@@ -543,8 +1047,6 @@ const initialFixtures = [
     "liveMinute": null,
     "events": []
   },
-
-  // --- ROUND 2 OF GROUP STAGE ---
   {
     "id": "m25",
     "stage": "Group A",
@@ -857,8 +1359,6 @@ const initialFixtures = [
     "liveMinute": null,
     "events": []
   },
-
-  // --- ROUND 3 OF GROUP STAGE ---
   {
     "id": "m49",
     "stage": "Group B",
@@ -1171,91 +1671,375 @@ const initialFixtures = [
     "liveMinute": null,
     "events": []
   },
-
-  // --- KNOCKOUT BRACKET STAGES ---
   {
     "id": "m73",
     "stage": "Round of 32",
-    "team1": "1A",
+    "team1": "2A",
     "team2": "2B",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-01T18:00:00Z",
-    "stadium": "MetLife Stadium, New York/New Jersey",
+    "kickoff": "2026-06-28T18:00:00Z",
+    "stadium": "SoFi Stadium, Los Angeles",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m74",
     "stage": "Round of 32",
-    "team1": "1C",
-    "team2": "2D",
+    "team1": "1E",
+    "team2": "3rd_1",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-02T20:00:00Z",
-    "stadium": "Estadio Azteca, Mexico City",
+    "kickoff": "2026-06-29T15:00:00Z",
+    "stadium": "Gillette Stadium, Boston",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m75",
-    "stage": "Round of 16",
-    "team1": "W73",
-    "team2": "2F",
+    "stage": "Round of 32",
+    "team1": "1F",
+    "team2": "2C",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-05T18:00:00Z",
-    "stadium": "SoFi Stadium, Los Angeles",
+    "kickoff": "2026-06-29T18:00:00Z",
+    "stadium": "Estadio Monterrey, Monterrey",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m76",
-    "stage": "Round of 16",
-    "team1": "W74",
-    "team2": "2H",
+    "stage": "Round of 32",
+    "team1": "1C",
+    "team2": "2F",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-06T20:00:00Z",
-    "stadium": "AT&T Stadium, Dallas",
+    "kickoff": "2026-06-29T21:00:00Z",
+    "stadium": "NRG Stadium, Houston",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m77",
-    "stage": "Quarter-finals",
-    "team1": "W75",
-    "team2": "W_Q1",
+    "stage": "Round of 32",
+    "team1": "1I",
+    "team2": "3rd_2",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-10T18:00:00Z",
-    "stadium": "Mercedes-Benz Stadium, Atlanta",
+    "kickoff": "2026-06-30T14:00:00Z",
+    "stadium": "MetLife Stadium, New York/New Jersey",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m78",
-    "stage": "Quarter-finals",
-    "team1": "W76",
-    "team2": "W_Q2",
+    "stage": "Round of 32",
+    "team1": "2E",
+    "team2": "2I",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
-    "kickoff": "2026-07-11T20:00:00Z",
-    "stadium": "Hard Rock Stadium, Miami",
+    "kickoff": "2026-06-30T17:00:00Z",
+    "stadium": "AT&T Stadium, Dallas",
     "liveMinute": null,
     "events": []
   },
   {
     "id": "m79",
+    "stage": "Round of 32",
+    "team1": "1A",
+    "team2": "3rd_3",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-06-30T20:00:00Z",
+    "stadium": "Estadio Azteca, Mexico City",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m80",
+    "stage": "Round of 32",
+    "team1": "1L",
+    "team2": "3rd_4",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-01T14:00:00Z",
+    "stadium": "Mercedes-Benz Stadium, Atlanta",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m81",
+    "stage": "Round of 32",
+    "team1": "1D",
+    "team2": "3rd_5",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-01T17:00:00Z",
+    "stadium": "Levi's Stadium, San Francisco Bay Area",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m82",
+    "stage": "Round of 32",
+    "team1": "2K",
+    "team2": "2L",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-01T21:00:00Z",
+    "stadium": "Lumen Field, Seattle",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m83",
+    "stage": "Round of 32",
+    "team1": "1B",
+    "team2": "3rd_6",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-02T14:00:00Z",
+    "stadium": "BMO Field, Toronto",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m84",
+    "stage": "Round of 32",
+    "team1": "2D",
+    "team2": "2G",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-02T17:00:00Z",
+    "stadium": "SoFi Stadium, Los Angeles",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m85",
+    "stage": "Round of 32",
+    "team1": "1J",
+    "team2": "2H",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-02T21:00:00Z",
+    "stadium": "BC Place, Vancouver",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m86",
+    "stage": "Round of 32",
+    "team1": "1G",
+    "team2": "3rd_7",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-03T14:00:00Z",
+    "stadium": "Hard Rock Stadium, Miami",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m87",
+    "stage": "Round of 32",
+    "team1": "1K",
+    "team2": "3rd_8",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-03T17:00:00Z",
+    "stadium": "Arrowhead Stadium, Kansas City",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m88",
+    "stage": "Round of 32",
+    "team1": "1H",
+    "team2": "2J",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-03T21:00:00Z",
+    "stadium": "AT&T Stadium, Dallas",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m89",
+    "stage": "Round of 16",
+    "team1": "W74",
+    "team2": "W77",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-04T17:00:00Z",
+    "stadium": "Lincoln Financial Field, Philadelphia",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m90",
+    "stage": "Round of 16",
+    "team1": "W73",
+    "team2": "W75",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-04T13:00:00Z",
+    "stadium": "NRG Stadium, Houston",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m91",
+    "stage": "Round of 16",
+    "team1": "W76",
+    "team2": "W78",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-05T16:00:00Z",
+    "stadium": "MetLife Stadium, New York/New Jersey",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m92",
+    "stage": "Round of 16",
+    "team1": "W79",
+    "team2": "W80",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-05T20:00:00Z",
+    "stadium": "Estadio Azteca, Mexico City",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m93",
+    "stage": "Round of 16",
+    "team1": "W83",
+    "team2": "W84",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-06T15:00:00Z",
+    "stadium": "AT&T Stadium, Dallas",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m94",
+    "stage": "Round of 16",
+    "team1": "W81",
+    "team2": "W82",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-06T20:00:00Z",
+    "stadium": "Lumen Field, Seattle",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m95",
+    "stage": "Round of 16",
+    "team1": "W86",
+    "team2": "W88",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-07T12:00:00Z",
+    "stadium": "Mercedes-Benz Stadium, Atlanta",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m96",
+    "stage": "Round of 16",
+    "team1": "W85",
+    "team2": "W87",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-07T16:00:00Z",
+    "stadium": "BC Place, Vancouver",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m97",
+    "stage": "Quarter-finals",
+    "team1": "W89",
+    "team2": "W90",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-09T16:00:00Z",
+    "stadium": "Gillette Stadium, Boston",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m98",
+    "stage": "Quarter-finals",
+    "team1": "W93",
+    "team2": "W94",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-10T15:00:00Z",
+    "stadium": "SoFi Stadium, Los Angeles",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m99",
+    "stage": "Quarter-finals",
+    "team1": "W91",
+    "team2": "W92",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-11T17:00:00Z",
+    "stadium": "Hard Rock Stadium, Miami",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m100",
+    "stage": "Quarter-finals",
+    "team1": "W95",
+    "team2": "W96",
+    "score1": null,
+    "score2": null,
+    "status": "SCHEDULED",
+    "kickoff": "2026-07-11T21:00:00Z",
+    "stadium": "Arrowhead Stadium, Kansas City",
+    "liveMinute": null,
+    "events": []
+  },
+  {
+    "id": "m101",
     "stage": "Semi-finals",
-    "team1": "W77",
-    "team2": "W_S1",
+    "team1": "W97",
+    "team2": "W98",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
@@ -1265,10 +2049,10 @@ const initialFixtures = [
     "events": []
   },
   {
-    "id": "m80",
+    "id": "m102",
     "stage": "Semi-finals",
-    "team1": "W78",
-    "team2": "W_S2",
+    "team1": "W99",
+    "team2": "W100",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
@@ -1278,10 +2062,10 @@ const initialFixtures = [
     "events": []
   },
   {
-    "id": "m81",
+    "id": "m103",
     "stage": "Third Place",
-    "team1": "L79",
-    "team2": "L80",
+    "team1": "L101",
+    "team2": "L102",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
@@ -1291,10 +2075,10 @@ const initialFixtures = [
     "events": []
   },
   {
-    "id": "m82",
+    "id": "m104",
     "stage": "Final",
-    "team1": "W79",
-    "team2": "W80",
+    "team1": "W101",
+    "team2": "W102",
     "score1": null,
     "score2": null,
     "status": "SCHEDULED",
@@ -1306,7 +2090,8 @@ const initialFixtures = [
 ];
 
 // --- App State ---
-let fixtures = JSON.parse(JSON.stringify(initialFixtures)); // Copy initial state (No results yet)
+let fixtures = JSON.parse(JSON.stringify(initialFixtures));
+resolveKnockoutTeams(); // Run dynamic resolution initially
 let userTimezone = "local";
 let followedTeams = JSON.parse(localStorage.getItem("wc26_followed_teams")) || [];
 let selectedDate = "2026-06-11";
@@ -1351,6 +2136,15 @@ const toastContainer = document.getElementById("toast-container");
 
 // --- Initialization ---
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Language State
+  const savedLang = localStorage.getItem("wc26_language") || "en";
+  currentLanguage = savedLang;
+  const langToggleCheckbox = document.getElementById("lang-toggle-checkbox");
+  if (langToggleCheckbox) {
+    langToggleCheckbox.checked = (savedLang === "es");
+  }
+  applyLanguage(savedLang);
+
   // 1. Populate Timezone Selectors
   populateTimezoneDropdowns();
 
@@ -1401,14 +2195,15 @@ async function fetchFixtures(isInitial = false) {
     
     // Merge updated scores into current state
     fixtures = updatedFixtures;
+    resolveKnockoutTeams(); // Resolve placeholders after updating scores!
     
     if (!isInitial) {
-      showToast("Match results updated with latest data!", "success");
+      showToast(translate("toast-success-update"), "success");
     }
   } catch (error) {
     console.error("Failed to fetch fixtures:", error);
     if (!isInitial) {
-      showToast("Error updating results. Check fixtures.json.", "error");
+      showToast(translate("toast-error-update"), "error");
     }
   }
 }
@@ -1441,6 +2236,18 @@ function setupEventListeners() {
   btnEditFavorites.addEventListener("click", () => {
     showOnboarding();
   });
+
+  // Language Toggle Switch
+  const langToggleCheckbox = document.getElementById("lang-toggle-checkbox");
+  if (langToggleCheckbox) {
+    langToggleCheckbox.addEventListener("change", (e) => {
+      const lang = e.target.checked ? "es" : "en";
+      applyLanguage(lang);
+      renderApp();
+      const msg = lang === "es" ? "Idioma cambiado a Español" : "Language changed to English";
+      showToast(msg, "info");
+    });
+  }
 
   // Onboarding dialog setup
   onboardingForm.addEventListener("submit", (e) => {
@@ -1542,8 +2349,8 @@ function showOnboarding() {
   onboardingTimezone.value = userTimezone;
   onboardingTeamsGrid.innerHTML = "";
 
-  // Sort keys alphabetically by team name
-  const sortedCodes = Object.keys(teamsDb).sort((a, b) => teamsDb[a].name.localeCompare(teamsDb[b].name));
+  // Sort keys alphabetically by translated team name
+  const sortedCodes = Object.keys(teamsDb).sort((a, b) => getTeamName(a).localeCompare(getTeamName(b)));
 
   sortedCodes.forEach(code => {
     const team = teamsDb[code];
@@ -1557,7 +2364,7 @@ function showOnboarding() {
     card.setAttribute("tabindex", "0");
     card.innerHTML = `
       <img src="https://flagcdn.com/w40/${team.flag}.png" alt="" class="flag-icon" loading="lazy">
-      <span class="team-label">${team.name}</span>
+      <span class="team-label">${getTeamName(code)}</span>
     `;
 
     const toggleCard = () => {
@@ -1567,7 +2374,7 @@ function showOnboarding() {
         card.setAttribute("aria-checked", "false");
       } else {
         if (currentSelected.length >= 4) {
-          showToast("You can follow up to 4 teams maximum!", "info");
+          showToast(translate("toast-max-teams"), "info");
           return;
         }
         card.classList.add("selected");
@@ -1686,18 +2493,19 @@ function renderStandings() {
       if (b.pts !== a.pts) return b.pts - a.pts;
       if (b.gd !== a.gd) return b.gd - a.gd;
       if (b.gf !== a.gf) return b.gf - a.gf;
-      return a.name.localeCompare(b.name);
+      return getTeamName(a.code).localeCompare(getTeamName(b.code));
     });
 
     const rowsHtml = groupTeams.map((team, index) => {
       const isFollowed = followedTeams.includes(team.code);
       const gdSign = team.gd > 0 ? `+${team.gd}` : team.gd;
+      const teamNameTranslated = getTeamName(team.code);
       return `
         <tr class="${isFollowed ? 'highlight-row' : ''}">
           <td class="cell-pos">${index + 1}</td>
           <td class="cell-team">
             <img src="https://flagcdn.com/w20/${team.flag}.png" alt="" class="standings-team-flag">
-            <span class="standings-team-code" data-team="${team.code}" title="${team.name}">
+            <span class="standings-team-code" data-team="${team.code}" title="${teamNameTranslated}">
               <span>${team.code}</span>
             </span>
           </td>
@@ -1712,22 +2520,22 @@ function renderStandings() {
     }).join("");
 
     return `
-      <div class="group-standings-card" role="region" aria-label="${groupName} Standings">
+      <div class="group-standings-card" role="region" aria-label="${translate(groupName)} Standings">
         <h3 class="group-title">
-          <span>${groupName}</span>
+          <span>${translate(groupName)}</span>
         </h3>
         <div class="standings-table-container">
           <table class="standings-table">
             <thead>
               <tr>
                 <th class="col-pos" scope="col">#</th>
-                <th class="col-team" scope="col">Team</th>
-                <th class="col-pts" scope="col">Pts</th>
-                <th class="col-pl" scope="col">Pl</th>
-                <th class="col-w" scope="col">W</th>
-                <th class="col-d" scope="col">D</th>
-                <th class="col-l" scope="col">L</th>
-                <th class="col-gd" scope="col">GD</th>
+                <th class="col-team" scope="col">${translate("col-team")}</th>
+                <th class="col-pts" scope="col">${translate("col-pts")}</th>
+                <th class="col-pl" scope="col">${translate("col-pl")}</th>
+                <th class="col-w" scope="col">${translate("col-w")}</th>
+                <th class="col-d" scope="col">${translate("col-d")}</th>
+                <th class="col-l" scope="col">${translate("col-l")}</th>
+                <th class="col-gd" scope="col">${translate("col-gd")}</th>
               </tr>
             </thead>
             <tbody>
@@ -1758,7 +2566,7 @@ function renderStandings() {
 // --- Followed Teams Header Bar ---
 function renderFollowedTeamsBar() {
   if (followedTeams.length === 0) {
-    followedListPlaceholder.innerHTML = `<span class="no-teams-text">None followed</span>`;
+    followedListPlaceholder.innerHTML = `<span class="no-teams-text" data-i18n="none-followed">${translate("none-followed")}</span>`;
     return;
   }
 
@@ -1766,7 +2574,7 @@ function renderFollowedTeamsBar() {
     const team = teamsDb[code];
     if (!team) return "";
     return `
-      <div class="fav-team-badge" title="${team.name}">
+      <div class="fav-team-badge" title="${getTeamName(code)}">
         <img src="https://flagcdn.com/w20/${team.flag}.png" alt="" class="flag-circle">
         <span>${code}</span>
       </div>
@@ -1778,7 +2586,6 @@ function renderFollowedTeamsBar() {
 function renderCalendarDatesTimeline() {
   const datesSet = new Set();
   fixtures.forEach(match => {
-    if (!match.stage.startsWith("Group")) return;
     const matchDateStr = match.kickoff.split("T")[0];
     datesSet.add(matchDateStr);
   });
@@ -1790,10 +2597,11 @@ function renderCalendarDatesTimeline() {
   }
 
   calendarDatesRow.innerHTML = uniqueDates.map(dateStr => {
+    const locale = currentLanguage === "es" ? "es-ES" : "en-US";
     const dateObj = new Date(dateStr + "T12:00:00Z");
-    const dayName = dateObj.toLocaleDateString("en-US", { weekday: "short" });
-    const dayNum = dateObj.toLocaleDateString("en-US", { day: "2-digit" });
-    const month = dateObj.toLocaleDateString("en-US", { month: "short" });
+    const dayName = dateObj.toLocaleDateString(locale, { weekday: "short" });
+    const dayNum = dateObj.toLocaleDateString(locale, { day: "2-digit" });
+    const month = dateObj.toLocaleDateString(locale, { month: "short" });
     const isActive = dateStr === selectedDate;
 
     return `
@@ -1843,14 +2651,18 @@ function renderFixturesGrid() {
 
   let filteredMatches = fixtures.filter(match => {
     const matchDateStr = match.kickoff.split("T")[0];
-    return match.stage.startsWith("Group") && matchDateStr === selectedDate;
+    return matchDateStr === selectedDate;
   });
 
   if (searchQuery) {
     filteredMatches = filteredMatches.filter(match => {
-      const t1 = (teamsDb[match.team1]?.name || match.team1).toLowerCase();
-      const t2 = (teamsDb[match.team2]?.name || match.team2).toLowerCase();
-      return t1.includes(searchQuery) || t2.includes(searchQuery);
+      const t1En = (teamsDb[match.team1]?.name || "").toLowerCase();
+      const t2En = (teamsDb[match.team2]?.name || "").toLowerCase();
+      const t1Es = translate(match.team1, {}, "es").toLowerCase();
+      const t2Es = translate(match.team2, {}, "es").toLowerCase();
+      return t1En.includes(searchQuery) || t2En.includes(searchQuery) || 
+             t1Es.includes(searchQuery) || t2Es.includes(searchQuery) ||
+             match.team1.toLowerCase().includes(searchQuery) || match.team2.toLowerCase().includes(searchQuery);
     });
   }
 
@@ -1860,14 +2672,17 @@ function renderFixturesGrid() {
     });
   }
 
-  const formattedDate = new Date(selectedDate + "T12:00:00Z").toLocaleDateString("en-US", {
+  const locale = currentLanguage === "es" ? "es-ES" : "en-US";
+  const formattedDate = new Date(selectedDate + "T12:00:00Z").toLocaleDateString(locale, {
     weekday: "long",
     month: "long",
     day: "numeric",
     year: "numeric"
   });
   currentDateTitle.textContent = `${formattedDate}`;
-  matchCountBadge.textContent = `${filteredMatches.length} matches`;
+  
+  const matchesLabel = filteredMatches.length === 1 ? translate("match-singular") : translate("match-plural");
+  matchCountBadge.textContent = `${filteredMatches.length} ${matchesLabel}`;
 
   if (filteredMatches.length === 0) {
     fixturesGridList.innerHTML = `
@@ -1875,20 +2690,22 @@ function renderFixturesGrid() {
         <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
-        <p>No fixtures match your current filters. Try adjusting search or choosing another date.</p>
+        <p>${translate("no-matches-found")}</p>
       </div>
     `;
     return;
   }
 
   fixturesGridList.innerHTML = filteredMatches.map(match => {
-    const t1 = teamsDb[match.team1] || { name: match.team1, flag: "un" };
-    const t2 = teamsDb[match.team2] || { name: match.team2, flag: "un" };
+    const t1Name = getTeamName(match.team1);
+    const t2Name = getTeamName(match.team2);
+    const t1Flag = getFlagUrl(match.team1);
+    const t2Flag = getFlagUrl(match.team2);
     
     const isFavMatch = followedTeams.includes(match.team1) || followedTeams.includes(match.team2);
     
     const matchTimeObj = new Date(match.kickoff);
-    const timeFormatter = new Intl.DateTimeFormat("en-US", {
+    const timeFormatter = new Intl.DateTimeFormat(locale, {
       timeZone: userTimezone,
       hour: "2-digit",
       minute: "2-digit",
@@ -1900,7 +2717,7 @@ function renderFixturesGrid() {
     let scoreHTML = "";
     
     if (match.status === "FINISHED") {
-      statusBadgeHTML = `<span class="status-badge finished">Finished</span>`;
+      statusBadgeHTML = `<span class="status-badge finished">${translate("FINISHED")}</span>`;
       scoreHTML = `
         <div class="match-score-display">
           <span class="score-digit">${match.score1}</span>
@@ -1909,7 +2726,7 @@ function renderFixturesGrid() {
         </div>
       `;
     } else if (match.status === "LIVE") {
-      statusBadgeHTML = `<span class="status-badge live"><span class="pulse-dot"></span> LIVE ${match.liveMinute}'</span>`;
+      statusBadgeHTML = `<span class="status-badge live"><span class="pulse-dot"></span> ${translate("LIVE")} ${match.liveMinute}'</span>`;
       scoreHTML = `
         <div class="match-score-display">
           <span class="score-digit">${match.score1}</span>
@@ -1918,7 +2735,7 @@ function renderFixturesGrid() {
         </div>
       `;
     } else {
-      statusBadgeHTML = `<span class="status-badge scheduled">Scheduled</span>`;
+      statusBadgeHTML = `<span class="status-badge scheduled">${translate("SCHEDULED")}</span>`;
       scoreHTML = `
         <div class="match-time-display">
           <span class="match-time-text">${formattedTime}</span>
@@ -1927,7 +2744,7 @@ function renderFixturesGrid() {
     }
 
     const starIcon = isFavMatch ? `
-      <span class="fav-star" title="Followed Match" style="color: var(--primary-gold); margin-right: 0.35rem;">
+      <span class="fav-star" title="${translate("star-followed-match")}" style="color: var(--primary-gold); margin-right: 0.35rem;">
         ★
       </span>
     ` : "";
@@ -1937,14 +2754,14 @@ function renderFixturesGrid() {
                tabindex="0" 
                data-match-id="${match.id}">
         <div class="match-card-meta">
-          <span class="match-stage-badge">${starIcon}${match.stage}</span>
+          <span class="match-stage-badge">${starIcon}${translate(match.stage)}</span>
           <span class="match-stadium-text" title="${match.stadium}">${match.stadium}</span>
         </div>
         <div class="match-card-scoreline">
           <div class="match-team team1">
-            <span class="match-team-name">${match.team1}</span>
+            <span class="match-team-name">${t1Name}</span>
             <div class="match-flag-container">
-              <img src="https://flagcdn.com/w40/${t1.flag}.png" alt="" class="match-team-flag" loading="lazy">
+              <img src="${t1Flag}" alt="" class="match-team-flag" loading="lazy">
             </div>
           </div>
           <div class="match-card-center">
@@ -1952,9 +2769,9 @@ function renderFixturesGrid() {
           </div>
           <div class="match-team team2">
             <div class="match-flag-container">
-              <img src="https://flagcdn.com/w40/${t2.flag}.png" alt="" class="match-team-flag" loading="lazy">
+              <img src="${t2Flag}" alt="" class="match-team-flag" loading="lazy">
             </div>
-            <span class="match-team-name">${match.team2}</span>
+            <span class="match-team-name">${t2Name}</span>
           </div>
         </div>
         <div class="match-card-status">
@@ -1987,8 +2804,10 @@ function renderBracket() {
     const roundMatches = fixtures.filter(m => m.stage === round);
     
     const matchesHTML = roundMatches.map(match => {
-      const t1 = teamsDb[match.team1] || null;
-      const t2 = teamsDb[match.team2] || null;
+      const t1Name = getTeamName(match.team1);
+      const t2Name = getTeamName(match.team2);
+      const t1Flag = getFlagUrl(match.team1);
+      const t2Flag = getFlagUrl(match.team2);
       
       const isFavMatch = followedTeams.includes(match.team1) || followedTeams.includes(match.team2);
       
@@ -2000,16 +2819,13 @@ function renderBracket() {
       const t1Class = winnerCode ? (winnerCode === match.team1 ? 'winner' : 'loser') : '';
       const t2Class = winnerCode ? (winnerCode === match.team2 ? 'winner' : 'loser') : '';
 
-      const t1Flag = t1 ? `https://flagcdn.com/w40/${t1.flag}.png` : "";
-      const t2Flag = t2 ? `https://flagcdn.com/w40/${t2.flag}.png` : "";
-
-      const starIcon = isFavMatch ? `<span class="bracket-meta-gold">★ Followed Match</span>` : "";
+      const starIcon = isFavMatch ? `<span class="bracket-meta-gold">${translate("star-followed-match")}</span>` : "";
       
       let matchLabel = match.stadium.split(",")[0];
       if (match.status === "LIVE") {
-        matchLabel = `LIVE ${match.liveMinute}'`;
+        matchLabel = `${translate("LIVE")} ${match.liveMinute}'`;
       } else if (match.status === "FINISHED") {
-        matchLabel = "Full Time";
+        matchLabel = translate("Full Time");
       }
 
       return `
@@ -2017,7 +2833,7 @@ function renderBracket() {
              data-match-id="${match.id}" 
              tabindex="0"
              role="button"
-             aria-label="View match center for ${match.team1} vs ${match.team2}">
+             aria-label="View match center for ${t1Name} vs ${t2Name}">
           <div class="bracket-meta">
             <span>${matchLabel}</span>
             ${starIcon}
@@ -2025,16 +2841,16 @@ function renderBracket() {
           
           <div class="bracket-team-row ${t1Class}">
             <div class="bracket-team-info">
-              ${t1 ? `<img src="${t1Flag}" alt="" class="bracket-flag" loading="lazy">` : ""}
-              <span class="bracket-team-name">${match.team1}</span>
+              <img src="${t1Flag}" alt="" class="bracket-flag" loading="lazy">
+              <span class="bracket-team-name">${t1Name}</span>
             </div>
             <span class="bracket-team-score">${score1}</span>
           </div>
 
           <div class="bracket-team-row ${t2Class}">
             <div class="bracket-team-info">
-              ${t2 ? `<img src="${t2Flag}" alt="" class="bracket-flag" loading="lazy">` : ""}
-              <span class="bracket-team-name">${match.team2}</span>
+              <img src="${t2Flag}" alt="" class="bracket-flag" loading="lazy">
+              <span class="bracket-team-name">${t2Name}</span>
             </div>
             <span class="bracket-team-score">${score2}</span>
           </div>
@@ -2043,8 +2859,8 @@ function renderBracket() {
     }).join("");
 
     return `
-      <div class="bracket-column" role="group" aria-label="${round} matches">
-        <h3 class="bracket-round-header">${round}</h3>
+      <div class="bracket-column" role="group" aria-label="${translate(round)} matches">
+        <h3 class="bracket-round-header">${translate(round)}</h3>
         ${matchesHTML}
       </div>
     `;
@@ -2081,14 +2897,15 @@ function openMatchCenter(matchId) {
 
 function renderMatchCenterContent(match, t1, t2) {
   const kickoffDateObj = new Date(match.kickoff);
-  const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  const locale = currentLanguage === "es" ? "es-ES" : "en-US";
+  const dateFormatter = new Intl.DateTimeFormat(locale, {
     timeZone: userTimezone,
     weekday: "long",
     month: "long",
     day: "numeric",
     year: "numeric"
   });
-  const timeFormatter = new Intl.DateTimeFormat("en-US", {
+  const timeFormatter = new Intl.DateTimeFormat(locale, {
     timeZone: userTimezone,
     hour: "2-digit",
     minute: "2-digit",
@@ -2097,6 +2914,11 @@ function renderMatchCenterContent(match, t1, t2) {
   
   const kickoffDateStr = dateFormatter.format(kickoffDateObj);
   const kickoffTimeStr = timeFormatter.format(kickoffDateObj);
+
+  const t1Name = getTeamName(match.team1);
+  const t2Name = getTeamName(match.team2);
+  const t1Flag = getFlagUrl(match.team1);
+  const t2Flag = getFlagUrl(match.team2);
 
   let scoreHTML = "";
   if (match.status === "FINISHED") {
@@ -2120,9 +2942,9 @@ function renderMatchCenterContent(match, t1, t2) {
   }
 
   const liveBadgeHTML = match.status === "LIVE" 
-    ? `<span class="status-badge live"><span class="pulse-dot"></span> LIVE ${match.liveMinute}'</span>`
+    ? `<span class="status-badge live"><span class="pulse-dot"></span> ${translate("LIVE")} ${match.liveMinute}'</span>`
     : match.status === "FINISHED"
-      ? `<span class="status-badge finished">Full Time</span>`
+      ? `<span class="status-badge finished">${translate("Full Time")}</span>`
       : `<span class="status-badge scheduled">${kickoffTimeStr}</span>`;
 
   let eventsHTML = "";
@@ -2151,18 +2973,28 @@ function renderMatchCenterContent(match, t1, t2) {
     `;
   }
 
+  // Generate localized tactical style description
+  const getStyleDesc = (team) => {
+    if (!team) return translate("tactics-pending");
+    if (currentLanguage === "es") {
+      const translatedStyleName = translate(team.style.name);
+      return `Un perfil táctico basado en su filosofía tradicional de juego. El estilo de ${translatedStyleName} se adapta a la composición de su equipo.`;
+    }
+    return team.style.desc;
+  };
+
   matchCenterContent.innerHTML = `
     <!-- Header -->
     <header class="mc-header">
-      <div class="mc-meta">${match.stage}</div>
+      <div class="mc-meta">${translate(match.stage)}</div>
       <div class="mc-stadium">${match.stadium} • ${kickoffDateStr}</div>
       
       <div class="mc-scoreboard">
         <div class="mc-team">
           <div class="mc-team-flag-container">
-            ${t1 ? `<img src="https://flagcdn.com/w80/${t1.flag}.png" alt="" class="mc-flag">` : ""}
+            <img src="${t1Flag}" alt="" class="mc-flag">
           </div>
-          <span class="mc-team-name">${match.team1}</span>
+          <span class="mc-team-name">${t1Name}</span>
         </div>
         
         <div class="mc-scores">
@@ -2176,9 +3008,9 @@ function renderMatchCenterContent(match, t1, t2) {
         
         <div class="mc-team">
           <div class="mc-team-flag-container">
-            ${t2 ? `<img src="https://flagcdn.com/w80/${t2.flag}.png" alt="" class="mc-flag">` : ""}
+            <img src="${t2Flag}" alt="" class="mc-flag">
           </div>
-          <span class="mc-team-name">${match.team2}</span>
+          <span class="mc-team-name">${t2Name}</span>
         </div>
       </div>
 
@@ -2187,8 +3019,8 @@ function renderMatchCenterContent(match, t1, t2) {
 
     <!-- Navigation Tabs -->
     <nav class="mc-tabs" aria-label="Match Center Section tabs">
-      <button type="button" class="mc-tab-btn ${activeDetailTab === 'lineups' ? 'active' : ''}" id="mc-tab-btn-lineups">Lineups & Squads</button>
-      <button type="button" class="mc-tab-btn ${activeDetailTab === 'tactics' ? 'active' : ''}" id="mc-tab-btn-tactics">Tactical Styles & Stats</button>
+      <button type="button" class="mc-tab-btn ${activeDetailTab === 'lineups' ? 'active' : ''}" id="mc-tab-btn-lineups">${translate("lineups-tab")}</button>
+      <button type="button" class="mc-tab-btn ${activeDetailTab === 'tactics' ? 'active' : ''}" id="mc-tab-btn-tactics">${translate("tactics-tab")}</button>
     </nav>
 
     <!-- Content Panel 1: Lineups -->
@@ -2197,8 +3029,8 @@ function renderMatchCenterContent(match, t1, t2) {
         <!-- Team 1 Squad -->
         <div>
           <h3 class="squad-column-title team1-title">
-            ${t1 ? `<img src="https://flagcdn.com/w20/${t1.flag}.png" alt="">` : ""}
-            ${match.team1} Squad
+            <img src="${t1Flag}" alt="" style="width:20px;height:13px;object-fit:cover;">
+            ${translate("team-squad", {team: t1Name})}
           </h3>
           ${renderSquadList(t1)}
         </div>
@@ -2206,8 +3038,8 @@ function renderMatchCenterContent(match, t1, t2) {
         <!-- Team 2 Squad -->
         <div>
           <h3 class="squad-column-title team2-title">
-            ${t2 ? `<img src="https://flagcdn.com/w20/${t2.flag}.png" alt="">` : ""}
-            ${match.team2} Squad
+            <img src="${t2Flag}" alt="" style="width:20px;height:13px;object-fit:cover;">
+            ${translate("team-squad", {team: t2Name})}
           </h3>
           ${renderSquadList(t2)}
         </div>
@@ -2221,20 +3053,20 @@ function renderMatchCenterContent(match, t1, t2) {
         <!-- Team 1 Card -->
         <div class="style-card team1-style">
           <div class="style-card-header">
-            <h4 class="style-title">${match.team1}</h4>
-            <span class="style-type">Positional Style</span>
+            <h4 class="style-title">${t1Name}</h4>
+            <span class="style-type">${translate("positional-style")}</span>
           </div>
-          <p class="style-desc">${t1 ? t1.style.desc : "Tactical style details pending final group alignment."}</p>
+          <p class="style-desc">${getStyleDesc(t1)}</p>
           ${renderTacticalAttributes(t1)}
         </div>
         
         <!-- Team 2 Card -->
         <div class="style-card team2-style">
           <div class="style-card-header">
-            <h4 class="style-title">${match.team2}</h4>
-            <span class="style-type">Positional Style</span>
+            <h4 class="style-title">${t2Name}</h4>
+            <span class="style-type">${translate("positional-style")}</span>
           </div>
-          <p class="style-desc">${t2 ? t2.style.desc : "Tactical style details pending final group alignment."}</p>
+          <p class="style-desc">${getStyleDesc(t2)}</p>
           ${renderTacticalAttributes(t2)}
         </div>
       </div>
@@ -2243,34 +3075,34 @@ function renderMatchCenterContent(match, t1, t2) {
       <div class="mc-stats-grid" style="margin-top: 2rem;">
         <div class="stats-card">
           <h4 class="stats-card-title">
-            ${t1 ? `<img src="https://flagcdn.com/w20/${t1.flag}.png" alt="" style="width: 20px; height: 13px; object-fit: cover;">` : ""}
-            ${match.team1} History
+            <img src="${t1Flag}" alt="" style="width: 20px; height: 13px; object-fit: cover;">
+            ${translate("team-history", {team: t1Name})}
           </h4>
           <div class="stats-list">
             <div class="stat-item">
-              <span class="stat-label">WC Participations</span>
+              <span class="stat-label">${translate("participations")}</span>
               <span class="stat-value">${t1 ? t1.participations : "-"}</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Best Finish</span>
-              <span class="stat-value stat-value-gold">${t1 ? t1.bestFinish : "-"}</span>
+              <span class="stat-label">${translate("best-finish")}</span>
+              <span class="stat-value stat-value-gold">${t1 ? (currentLanguage === "es" ? translateBestFinish(t1.bestFinish) : t1.bestFinish) : "-"}</span>
             </div>
           </div>
         </div>
 
         <div class="stats-card">
           <h4 class="stats-card-title">
-            ${t2 ? `<img src="https://flagcdn.com/w20/${t2.flag}.png" alt="" style="width: 20px; height: 13px; object-fit: cover;">` : ""}
-            ${match.team2} History
+            <img src="${t2Flag}" alt="" style="width: 20px; height: 13px; object-fit: cover;">
+            ${translate("team-history", {team: t2Name})}
           </h4>
           <div class="stats-list">
             <div class="stat-item">
-              <span class="stat-label">WC Participations</span>
+              <span class="stat-label">${translate("participations")}</span>
               <span class="stat-value">${t2 ? t2.participations : "-"}</span>
             </div>
             <div class="stat-item">
-              <span class="stat-label">Best Finish</span>
-              <span class="stat-value stat-value-gold">${t2 ? t2.bestFinish : "-"}</span>
+              <span class="stat-label">${translate("best-finish")}</span>
+              <span class="stat-value stat-value-gold">${t2 ? (currentLanguage === "es" ? translateBestFinish(t2.bestFinish) : t2.bestFinish) : "-"}</span>
             </div>
           </div>
         </div>
@@ -2302,38 +3134,53 @@ function renderMatchCenterContent(match, t1, t2) {
 
 function renderSquadList(teamData) {
   if (!teamData) {
-    return `<p class="no-teams-text">Squad lineups will be available closer to kickoff.</p>`;
+    return `<p class="no-teams-text">${translate("squad-lineups-pending")}</p>`;
   }
+
+  const translatePlayerName = (name) => {
+    if (currentLanguage !== "es") return name;
+    return name
+      .replace("Goalkeeper One", "Portero Uno")
+      .replace("Goalkeeper", "Arquero")
+      .replace("Defender", "Defensor")
+      .replace("Midfielder", "Centrocampista")
+      .replace("Attacker", "Atacante")
+      .replace("Forward", "Delantero")
+      .replace("Backup", "Suplente")
+      .replace("Sub", "Suplente");
+  };
 
   const startersHTML = teamData.starters.map(player => {
     const isStar = player.name.endsWith("*");
-    const formattedName = isStar ? player.name.replace("*", "") : player.name;
+    const cleanName = isStar ? player.name.replace("*", "") : player.name;
+    const translatedName = translatePlayerName(cleanName) + (isStar ? "*" : "");
     const rowClass = isStar ? "player-row star-player" : "player-row";
     return `
       <div class="${rowClass}">
         <span class="player-num">${player.num}</span>
-        <span class="player-name">${formattedName}</span>
+        <span class="player-name">${translatedName}</span>
         <span class="player-pos">${player.pos}</span>
       </div>
     `;
   }).join("");
 
   const subsHTML = teamData.subs.map(player => {
+    const translatedName = translatePlayerName(player.name);
     return `
       <div class="player-row">
         <span class="player-num">${player.num}</span>
-        <span class="player-name">${player.name}</span>
+        <span class="player-name">${translatedName}</span>
         <span class="player-pos">${player.pos}</span>
       </div>
     `;
   }).join("");
 
   return `
-    <div class="lineup-section-header">Starting XI</div>
+    <div class="lineup-section-header">${translate("starting-lineup")}</div>
     <div class="player-list" role="list">
       ${startersHTML}
     </div>
-    <div class="lineup-section-header">Substitutes</div>
+    <div class="lineup-section-header">${translate("substitutes")}</div>
     <div class="player-list" role="list">
       ${subsHTML}
     </div>
@@ -2346,28 +3193,28 @@ function renderTacticalAttributes(teamData) {
   return `
     <div class="style-attributes">
       <div class="attr-row">
-        <span class="attr-name">Attack</span>
+        <span class="attr-name">${translate("attack")}</span>
         <div class="attr-bar-bg">
           <div class="attr-bar-fill" style="--percent: ${attrs.attack}%;"></div>
         </div>
         <span class="attr-value">${attrs.attack}</span>
       </div>
       <div class="attr-row">
-        <span class="attr-name">Defense</span>
+        <span class="attr-name">${translate("defense")}</span>
         <div class="attr-bar-bg">
           <div class="attr-bar-fill" style="--percent: ${attrs.defense}%;"></div>
         </div>
         <span class="attr-value">${attrs.defense}</span>
       </div>
       <div class="attr-row">
-        <span class="attr-name">Speed</span>
+        <span class="attr-name">${translate("speed")}</span>
         <div class="attr-bar-bg">
           <div class="attr-bar-fill" style="--percent: ${attrs.speed}%;"></div>
         </div>
         <span class="attr-value">${attrs.speed}</span>
       </div>
       <div class="attr-row">
-        <span class="attr-name">Control</span>
+        <span class="attr-name">${translate("control")}</span>
         <div class="attr-bar-bg">
           <div class="attr-bar-fill" style="--percent: ${attrs.control}%;"></div>
         </div>
@@ -2399,4 +3246,19 @@ function showToast(message, type = "info") {
       toast.remove();
     });
   }, 3000);
+}
+
+
+function translateBestFinish(finish) {
+  if (!finish) return "-";
+  return finish
+    .replace("Winners", "Campeón")
+    .replace("Runners-up", "Subcampeón")
+    .replace("Third Place", "Tercer Puesto")
+    .replace("Fourth Place", "Cuarto Puesto")
+    .replace("Quarter-finals", "Cuartos de final")
+    .replace("Round of 16", "Octavos de final")
+    .replace("Group Stage", "Fase de Grupos")
+    .replace("Debut", "Debut")
+    .replace("times", "veces");
 }
